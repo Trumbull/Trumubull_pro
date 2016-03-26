@@ -1,0 +1,95 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/copper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <!-- we add graph view to display -->
+    
+    <DigitalClock
+        android:id="@+id/DigitalClock02"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_alignLeft="@+id/id_order"
+        android:layout_alignRight="@+id/id_order"
+        android:layout_below="@+id/id_order"
+        android:text="DigitalClock"
+        android:textColor="@color/grey"
+        android:textColorLink="@color/menu" />
+
+    <TextView
+        android:id="@+id/end_price"
+        android:layout_width="100dp"
+        android:layout_height="32dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/view_order"
+        android:layout_marginRight="32dp"
+        android:textSize="20dip" />
+
+    <TextView
+        android:id="@+id/price_change"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/end_price" />
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="100dp"
+        android:layout_height="32dp"
+        android:layout_alignBaseline="@+id/DigitalClock02"
+        android:layout_alignBottom="@+id/DigitalClock02"
+        android:layout_marginRight="38dp"
+        android:layout_toLeftOf="@+id/end_price"
+        android:gravity="left"
+        android:text="@string/min_price"
+        android:textColor="@color/grey"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/TextView04"
+        android:layout_width="100dp"
+        android:layout_height="32dp"
+        android:layout_alignBaseline="@+id/TextView02"
+        android:layout_alignBottom="@+id/TextView02"
+        android:layout_toRightOf="@+id/view_order"
+        android:gravity="left"
+        android:text="@string/max_price"
+        android:textColor="@color/grey"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/view_order"
+        android:layout_width="100dp"
+        android:layout_height="32dp"
+        android:layout_above="@+id/DigitalClock02"
+        android:layout_alignLeft="@+id/TextView02"
+        android:layout_alignTop="@+id/id_order"
+        android:layout_marginRight="28dp"
+        android:layout_toLeftOf="@+id/end_price"
+        android:textSize="20dip" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/id_order"
+        android:layout_marginRight="45dp" >
+    </RelativeLayout>
+<!--  android:layout_alignTop="@+id/relativeLayout1"-->
+
+    <TextView
+        android:id="@+id/id_order"
+        android:layout_width="100dp"
+        android:layout_height="32dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/relativeLayout1"
+        android:gravity="left"
+        android:textSize="20dip" />
+
+</RelativeLayout>

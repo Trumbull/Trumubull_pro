@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center" />
+
+    <Button
+        android:id="@+id/sell"
+        android:layout_width="265dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/Sell" />
+
+    <Button
+        android:id="@+id/buy"
+        android:layout_width="265dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/Buy" />
+    
+     <Button
+         android:id="@+id/install"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentRight="true"
+         android:text="@string/Install" />
+
+    <TextView
+        android:id="@+id/price_max_view"
+        android:layout_width="130dp"
+        android:layout_height="30dp"
+        android:layout_above="@+id/price_editor_up"
+        android:layout_alignLeft="@+id/buy"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/take_profit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/price_min_view"
+        android:layout_alignRight="@+id/price_min_view"
+        android:layout_below="@+id/price_editor_up"
+        android:ems="10"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/Take_profit_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/take_profit"
+        android:layout_alignRight="@+id/take_profit"
+        android:layout_below="@+id/take_profit"
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/stop_loss_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/price_max_view"
+        android:layout_alignRight="@+id/price_max_view"
+        android:layout_below="@+id/price_editor_up"
+        android:ems="10"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/Stop_loss_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/Take_profit_view"
+        android:layout_alignLeft="@+id/buy"
+        android:layout_alignRight="@+id/stop_loss_textview"
+        android:layout_below="@+id/stop_loss_textview"
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/price_editor_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/volume"
+        android:layout_alignRight="@+id/volume"
+        android:layout_below="@+id/volume"
+        android:ems="10"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/volume"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/spinner"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="numberDecimal" />
+
+    <Spinner
+        android:id="@+id/Spinner01"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/spinner"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/price_min_view"
+        android:layout_width="130dp"
+        android:layout_height="30dp"
+        android:layout_above="@+id/price_editor_up"
+        android:layout_alignRight="@+id/sell"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="20sp" />
+
+</RelativeLayout>

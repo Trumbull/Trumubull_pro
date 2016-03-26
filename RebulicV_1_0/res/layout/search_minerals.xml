@@ -1,0 +1,97 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:screenOrientation="portrait"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ru.Trumbull_pro.p001_republic_41.MainActivity" > 
+   
+    <TextView
+        android:id="@+id/price_min_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/Search_minerals"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:labelFor="@id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/price_max_view"
+        android:layout_alignBottom="@+id/price_max_view"
+        android:layout_toRightOf="@+id/textView3"
+        android:ems="10"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/editText2"
+        android:labelFor="@id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignLeft="@+id/editText1"
+        android:ems="10"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/price_max_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/price_min_view"
+        android:layout_below="@+id/price_min_view"
+        android:layout_marginTop="16dp"
+        android:text="@string/Length"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/price_max_view"
+        android:layout_below="@+id/editText1"
+        android:layout_marginTop="29dp"
+        android:text="@string/Width"
+        tools:ignore="RtlHardcoded" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/editText2"
+        android:layout_below="@+id/editText2"
+        android:layout_marginTop="65dp"
+        android:text="@string/Scan" />
+<AbsoluteLayout
+ android:layout_width="match_parent"
+ android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/pb_horizontal"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_x="2dp"
+        android:layout_y="385dp"
+        android:max="100" />
+    <TextView
+            android:id="@+id/tv_progress_horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/pb_horizontal"
+            android:background="@android:color/transparent"
+            android:gravity="center" />
+
+</AbsoluteLayout>
+</RelativeLayout>

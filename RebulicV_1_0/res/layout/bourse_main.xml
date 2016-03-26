@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/menu"
+        android:layout_width="200dp"
+        android:layout_height="fill_parent"
+        android:background="#2c2c2c"
+        android:orientation="vertical" >
+
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/images" >
+        </TableRow>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/grey" />
+
+        <TableRow
+            android:id="@+id/p1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/activated_background" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_quotes" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="50dip"
+                android:background="@drawable/activated_background"
+                android:gravity="center"
+                android:text="@string/one_bourse"
+                android:textColor="#FFFFFF"
+                android:textSize="18dip" />
+        </TableRow>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/grey" />
+
+        <TableRow
+            android:id="@+id/p2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/activated_background" >
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_graph" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="50dip"
+                android:background="@drawable/activated_background"
+                android:gravity="center"
+                android:text="@string/two_bourse"
+                android:textColor="#FFFFFF"
+                android:textSize="18dip" />
+        </TableRow>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/grey" />
+
+        <TableRow
+            android:id="@+id/p3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/activated_background" >
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_trade" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="50dip"
+                android:background="@drawable/activated_background"
+                android:gravity="center"
+                android:text="@string/three_bourse"
+                android:textColor="#FFFFFF"
+                android:textSize="18dip" />
+
+            <TextView
+                android:id="@+id/price_min_view"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent" />
+
+        </TableRow>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/grey" />
+
+        <TableRow
+            android:id="@+id/p4"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/activated_background" >
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_finance" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="50dip"
+                android:background="@drawable/activated_background"
+                android:gravity="center"
+                android:text="@string/four_bourse"
+                android:textColor="#FFFFFF"
+                android:textSize="18dip" />
+        </TableRow>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/grey" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:background="#2c2c2c"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/menu_button"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:background="@drawable/activated_background"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_drawer" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#2c2c2c"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/imageButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:background="#2c2c2c"
+                    android:src="@drawable/button_buy" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:background="@color/grey" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#FFf" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="137dp"
+                android:layout_weight="1" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="155dp"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:id="@+id/fragment1"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp" >
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/fragment2"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp" >
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/fragment3"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp" >
+
+                    </RelativeLayout>
+                    
+                    <RelativeLayout
+                        android:id="@+id/fragment4"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp" >
+
+                    </RelativeLayout>
+                    
+                    <RelativeLayout
+                        android:id="@+id/fragment5"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp" >
+
+                    </RelativeLayout>
+                    
+                    <RelativeLayout
+                        android:id="@+id/fragment6"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp" >
+
+                    </RelativeLayout>
+                    
+                    <RelativeLayout
+                        android:id="@+id/fragment7"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp" >
+
+                    </RelativeLayout>
+                    
+                    <RelativeLayout
+                        android:id="@+id/fragment8"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp" >
+
+                    </RelativeLayout>
+                    
+                    <RelativeLayout
+                        android:id="@+id/fragment9"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp" >
+
+                    </RelativeLayout>
+                    
+                    <RelativeLayout
+                        android:id="@+id/fragment10"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp" >
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,175 @@
+package ru.trumbull_pro.rebulicv_1_0.fragment;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.telephony.TelephonyManager;
+import android.text.Html;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+import ru.trumbull_pro.rebulicv_1_0.DatabaseHelper;
+import ru.trumbull_pro.rebulicv_1_0.R;
+import ru.trumbull_pro.rebulicv_1_0.R.id;
+import ru.trumbull_pro.rebulicv_1_0.R.layout;
+import ru.trumbull_pro.rebulicv_1_0.R.menu;
+
+public class Open_order extends Fragment {
+	JSONParser jsonParser = new JSONParser();
+	TelephonyManager telephonyManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+	String id_user = telephonyManager.getDeviceId();
+
+	// укажите свой адрес
+	private static String url_order = "http://192.168.1.33/order.php";
+
+	// Имена узлов JSON
+	private static final String TAG_SUCCESS = "success";
+	private static final String TAG_TABLE = "transaction";
+	private static final String TAG_TAB_PRICE = "price";
+	private static final String TAG_NAME = "name";
+	private static final String TAG_TAKE_PROFIT = "take_profit";
+	private static final String TAG_STOP_LOSS = "stop_loss";
+	private static final String TAG_STATUS = "status_transaction";
+	private static final String TAG_VOLUME = "volume";
+	private static final String TAG_CHANGE_SUM = "change_sum";
+	private static final String TAG_TIME = "time";
+	String name;
+	TextView id_order, view_order, begin_price, end_price, price_change;
+	final String LOG_TAG = "myLogs";
+	static String json = "";
+	int flag = 0;
+	DatabaseHelper dbHelper;
+	SQLiteDatabase db;
+	TaskOrder tp_order;
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.activity_open_order, container, false);
+
+		id_order = (TextView) view.findViewById(R.id.id_order);
+		view_order = (TextView) view.findViewById(R.id.view_order);
+		begin_price = (TextView) view.findViewById(R.id.begin_price);
+		end_price = (TextView) view.findViewById(R.id.end_price);
+		price_change = (TextView) view.findViewById(R.id.price_change);
+
+		return view;
+	}
+
+	private class TaskOrder extends AsyncTask<String, String, String> {
+		// Generates dummy data in a non-ui thread
+		@Override
+
+		protected String doInBackground(String... args) {
+
+			int success;
+			try {
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				params.add(new BasicNameValuePair("id_user", id_user));
+
+				// получаем информацию через запрос HTTP GET
+				JSONObject json = jsonParser.makeHttpRequest(url_order, "GET", params);
+
+				// ответ от json о товаре
+				// Log.d("Single Product Details", json.toString());
+
+				// json success tag
+				success = json.getInt(TAG_SUCCESS);
+
+				if (success == 1) {
+					// если получили информацию о товаре
+					JSONArray transactionObj = json.getJSONArray(TAG_TABLE);
+
+					// получим первый объект из массива JSON Array
+					JSONObject transaction = transactionObj.getJSONObject(0);
+
+					name = transaction.getString(TAG_NAME);
+					String price = transaction.getString(TAG_TAB_PRICE);
+					String take_profit = transaction.getString(TAG_TAB_PRICE);
+					String stop_loss = transaction.getString(TAG_STOP_LOSS);
+					String status_transaction = transaction.getString(TAG_STATUS);
+					String volume = transaction.getString(TAG_VOLUME);
+					String change_sum = transaction.getString(TAG_CHANGE_SUM);
+				} else {
+					// не нашли товар по pid
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		// Обновлятор
+		@Override
+		protected void onProgressUpdate(String... values) {
+			Double flag = Double.valueOf(values[2]);
+			if (flag < 0) {
+				quotes_titan_1.setTextColor(Color.RED);
+				quotes_titan_2.setTextColor(Color.RED);
+				price_change.setTextColor(Color.RED);
+				price_change.startAnimation(anim_ghost);
+				price_change.setText(values[2]);
+				quotes_titan_1.startAnimation(anim);
+				quotes_titan_1.setText(Html.fromHtml(values[0] + "<br />"));
+				quotes_titan_2.startAnimation(anim);
+				quotes_titan_2.setText(Html.fromHtml(values[1] + "<br />"));
+			} else {
+				if (flag == 0) {// начальная цена
+					quotes_titan_1.setTextColor(Color.BLACK);
+					quotes_titan_2.setTextColor(Color.BLACK);
+					quotes_titan_1.setText(Html.fromHtml(values[0] + "<br />"));
+					quotes_titan_2.setText(Html.fromHtml(values[1] + "<br />"));
+				} else {
+					quotes_titan_1.setTextColor(Color.BLUE);
+					quotes_titan_2.setTextColor(Color.BLUE);
+					price_change.setTextColor(Color.GREEN);
+					price_change.startAnimation(anim_ghost);
+					price_change.setText("+" + values[2]);
+					quotes_titan_1.startAnimation(anim);
+					quotes_titan_1.setText(Html.fromHtml(values[0] + "<br />"));
+					quotes_titan_2.startAnimation(anim);
+					quotes_titan_2.setText(Html.fromHtml(values[1] + "<br />"));
+				}
+
+			}
+		}
+
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			tp_titan.cancel(false);
+			Log.d(LOG_TAG, "Это в середине AsyncTask : " + tp_titan);
+			Toast.makeText(getActivity(), "Биржа не доступна!", Toast.LENGTH_LONG).show();
+			Log.d(LOG_TAG, "Статус задачи: " + tp_titan.getStatus().toString());
+		}
+
+		protected void onCancelled() {
+			super.onCancelled();
+			Log.d(LOG_TAG, "В конце AsyncTask : " + tp_titan);
+			Log.d(LOG_TAG, "Статус задачи: " + tp_titan.getStatus().toString());
+
+		}
+
+	}
+}

@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TableRow style="@style/HeaderRow" >
+
+            <TextView
+                style="@style/HeaderText"
+                android:layout_weight="30"
+                android:text="@string/Inventory_valuation" >
+            </TextView>
+        </TableRow>
+
+        <TableRow style="@style/HeaderRow" >
+
+            <TextView
+                style="@style/HeaderText"
+                android:layout_width="170dp"
+                android:layout_height="fill_parent"
+                android:text="@string/Title" >
+            </TextView>
+
+            <TextView
+                style="@style/HeaderText"
+                android:layout_width="123dp"
+                android:layout_height="fill_parent"
+                android:text="@string/Quantity" />
+
+            <TextView
+                style="@style/HeaderText"
+                android:layout_width="184dp"
+                android:layout_height="fill_parent"
+                android:text="@string/giant" />
+
+            <TextView
+                style="@style/HeaderText"
+                android:layout_width="167dp"
+                android:layout_height="fill_parent"
+                android:text="@string/big" >
+            </TextView>
+
+            <TextView
+                style="@style/HeaderText"
+                android:layout_width="164dp"
+                android:layout_height="fill_parent"
+                android:text="@string/average" >
+            </TextView>
+
+            <TextView
+                style="@style/HeaderText"
+                android:layout_width="150dp"
+                android:layout_height="fill_parent"
+                android:text="@string/small" >
+            </TextView>
+        </TableRow>
+    </TableLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow style="@style/HeaderRow" >
+
+                <TextView
+                    style="@style/HeaderText"
+                    android:layout_height="0dp" />
+
+                <TextView
+                    style="@style/HeaderText"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="" />
+
+                <TextView
+                    style="@style/HeaderText"
+                    android:layout_height="0dp"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:layout_width="170dp"
+                    android:text="@string/titan" />
+
+                <TextView
+                    android:id="@+id/titan1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/titan_1_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/titan_1_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/titan_1_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/titan_1_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/Rhodium" />
+
+                <TextView
+                    android:id="@+id/Rhodium_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/Rhodium_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/Rhodium_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/Rhodium_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/Rhodium_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/platinum" />
+
+                <TextView
+                    android:id="@+id/platinum_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/platinum_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/platinum_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/platinum_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/platinum_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/gold" />
+
+                <TextView
+                    android:id="@+id/gold_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/gold_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/gold_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/gold_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/gold_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/iridium" />
+
+                <TextView
+                    android:id="@+id/iridium_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/iridium_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/iridium_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/iridium_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/iridium_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/diamond" />
+
+                <TextView
+                    android:id="@+id/diamond_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/diamond_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/diamond_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/diamond_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/diamond_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/silver" />
+
+                <TextView
+                    android:id="@+id/silver_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/silver_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/silver_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/silver_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/silver_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/iron" />
+
+                <TextView
+                    android:id="@+id/iron_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/iron_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/iron_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/iron_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/iron_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/cooper" />
+
+                <TextView
+                    android:id="@+id/cooper_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/cooper_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/cooper_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/cooper_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/cooper_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/oil" />
+
+                <TextView
+                    android:id="@+id/oil_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/oil_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/oil_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/oil_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/oil_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/gas" />
+
+                <TextView
+                    android:id="@+id/gas_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/gas_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/gas_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/gas_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/gas_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/nickel" />
+
+                <TextView
+                    android:id="@+id/nickel_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/nickel_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/nickel_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/nickel_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/nickel_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/aluminium" />
+
+                <TextView
+                    android:id="@+id/aluminium_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/aluminium_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/aluminium_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/aluminium_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/aluminium_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/manganese" />
+
+                <TextView
+                    android:id="@+id/manganese_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/manganese_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/manganese_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/manganese_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/manganese_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/tin" />
+
+                <TextView
+                    android:id="@+id/tin_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/tin_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/tin_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/tin_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/tin_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/coal" />
+
+                <TextView
+                    android:id="@+id/coal_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/coal_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/coal_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/coal_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/coal_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+
+            <TableRow style="@style/BodyRow" >
+
+                <TextView
+                    style="@style/BodyText"
+                    android:text="@string/uranium" />
+
+                <TextView
+                    android:id="@+id/uranium_1"
+                    style="@style/BodyText"
+                    android:layout_width="123dp" />
+
+                <TextView
+                    android:id="@+id/uranium_2"
+                    style="@style/BodyText"
+                    android:layout_width="184dp" />
+
+                <TextView
+                    android:id="@+id/uranium_3"
+                    style="@style/BodyText"
+                    android:layout_width="167dp" />
+
+                <TextView
+                    android:id="@+id/uranium_4"
+                    style="@style/BodyText"
+                    android:layout_width="164dp" />
+
+                <TextView
+                    android:id="@+id/uranium_5"
+                    style="@style/BodyText"
+                    android:layout_width="150dp" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+</LinearLayout>
