@@ -86,7 +86,7 @@ public class Open_order extends Fragment {
 		stop_loss_text.setText(Html.fromHtml("Stop loss" + "<br />"));
 		Bundle args = getArguments();
 		if (args != null)
-
+			
 			id_transaction = args.getString("test_text");
 		Log.d(LOG_TAG, "Переданная переменная: " + id_transaction);
 		tp_order = new TaskOrder();
