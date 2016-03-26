@@ -73,7 +73,7 @@
         android:id="@+id/volume_order"
         android:layout_width="50dp"
         android:layout_height="32dp"
-        android:layout_above="@+id/stop_loss_textview"
+        android:layout_alignBottom="@+id/view_order"
         android:layout_toRightOf="@+id/view_order"
         android:textSize="20dip" />
 
@@ -81,7 +81,7 @@
         android:id="@+id/stop_loss_order"
         android:layout_width="50dp"
         android:layout_height="32dp"
-        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignBottom="@+id/end_price"
         android:layout_alignTop="@+id/end_price"
         android:layout_toRightOf="@+id/stop_loss_textview"
         android:textSize="20dip" />
@@ -97,12 +97,10 @@
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/begin_price"
-        android:layout_alignBottom="@+id/begin_price"
-        android:layout_toRightOf="@+id/begin_price"
-        android:text="→"
+        android:layout_width="20dp"
+        android:layout_height="23dp"
+        android:layout_alignLeft="@+id/view_order"
+        android:layout_below="@+id/view_order"
         android:textSize="20sp" />
 
 </RelativeLayout>

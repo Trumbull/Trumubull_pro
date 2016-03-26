@@ -59,7 +59,7 @@ public class Open_order extends Fragment {
 	Animation anim;
 	private String id_transaction;
 	String name;
-	TextView stop_loss_text, id_order, name_textview, stop_loss, view_order, begin_price, end_price, price_change, volume_order;
+	TextView arrow, stop_loss_text, id_order, name_textview, stop_loss, view_order, begin_price, end_price, price_change, volume_order;
 	final String LOG_TAG = "myLogs";
 	static String json = "";
 	int flag = 0;
@@ -81,7 +81,10 @@ public class Open_order extends Fragment {
 		stop_loss = (TextView) view.findViewById(R.id.stop_loss_order);
 		volume_order = (TextView) view.findViewById(R.id.volume_order);
 		stop_loss_text = (TextView) view.findViewById(R.id.stop_loss_textview);
+		arrow = (TextView) view.findViewById(R.id.textView1);
 		stop_loss_text.setText(Html.fromHtml("S/L" + "<br />"));
+		arrow.setText(Html.fromHtml("&#8594" + "<br />"));
+		
 		Bundle args = getArguments();
 		if (args != null)
 		
