@@ -40,8 +40,8 @@ import android.widget.Toast;
 public class Trade_copper extends Activity {
 	JSONParser jParser = new JSONParser();
 	JSONParser jsonParser = new JSONParser();
-	private static String transaction = "http://192.168.1.35/create_product.php";
-	private static String price_php = "http://192.168.1.35/get_all_products.php";
+	private static String transaction = "http://192.168.1.33/create_product.php";
+	private static String price_php = "http://192.168.1.33/get_all_products.php";
 
 	// Имена узлов JSON
 	private static final String TAG_SUCCESS = "success";

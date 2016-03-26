@@ -12,7 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -44,8 +43,7 @@ public class Open_order extends Fragment {
 	JSONParser jsonParser = new JSONParser();
 
 	// укажите свой адрес
-	private static final String url_order = "http://192.168.1.35/order.php";
-
+	private static final String url_order = "http://192.168.1.33/order.php";
 	// Имена узлов JSON
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_TAB_PRICE = "transaction";
@@ -61,7 +59,7 @@ public class Open_order extends Fragment {
 	Animation anim;
 	private String id_transaction;
 	String name;
-	TextView stop_loss_text, id_order, name_textview, stop_loss, view_order, begin_price, end_price, price_change, volume_order;
+	TextView volume_text,stop_loss_text, id_order, name_textview, stop_loss, view_order, begin_price, end_price, price_change, volume_order;
 	final String LOG_TAG = "myLogs";
 	static String json = "";
 	int flag = 0;
@@ -83,7 +81,9 @@ public class Open_order extends Fragment {
 		stop_loss = (TextView) view.findViewById(R.id.stop_loss_order);
 		volume_order = (TextView) view.findViewById(R.id.volume_order);
 		stop_loss_text = (TextView) view.findViewById(R.id.stop_loss_textview);
+		volume_text=(TextView) view.findViewById(R.id.TextView01);
 		stop_loss_text.setText(Html.fromHtml("Stop loss" + "<br />"));
+		volume_text.setText(Html.fromHtml("Объем" + "<br />"));
 		Bundle args = getArguments();
 		if (args != null)
 			
@@ -152,6 +152,7 @@ public class Open_order extends Fragment {
 				view_order.setText(Html.fromHtml(values[4] + "<br />"));
 			}
 			begin_price.setText(Html.fromHtml(values[1] + "<br />"));
+			Log.d(LOG_TAG, "Профит: " + values[2]);
 			end_price.setText(Html.fromHtml(values[2] + "<br />"));
 			stop_loss.setText(Html.fromHtml(values[3] + "<br />"));
 			volume_order.setText(Html.fromHtml(values[5] + "<br />"));
