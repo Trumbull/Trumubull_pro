@@ -59,7 +59,7 @@ public class Bourse_main extends Activity implements OnClickListener {
 	JSONParser jsonParser = new JSONParser();
 
 	// укажите свой адрес
-	private static final String url_order_id = "http://192.168.1.33/order_id.php";
+	private static final String url_order_id = "http://192.168.1.34/order_id.php";
 
 	// Имена узлов JSON
 	private static final String TAG_SUCCESS = "success";

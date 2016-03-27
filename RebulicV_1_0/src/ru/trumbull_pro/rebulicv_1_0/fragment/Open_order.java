@@ -43,7 +43,7 @@ public class Open_order extends Fragment {
 	JSONParser jsonParser = new JSONParser();
 
 	// укажите свой адрес
-	private static final String url_order = "http://192.168.1.33/order.php";
+	private static final String url_order = "http://192.168.1.34/order.php";
 	// Имена узлов JSON
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_TAB_PRICE = "transaction";
@@ -59,7 +59,7 @@ public class Open_order extends Fragment {
 	Animation anim;
 	private String id_transaction;
 	String name;
-	TextView arrow, stop_loss_text, id_order, name_textview, stop_loss, view_order, begin_price, end_price, price_change, volume_order;
+	TextView tp_order_open, text_tp,arrow, stop_loss_text, id_order, name_textview, stop_loss, view_order, begin_price, end_price, price_change, volume_order;
 	final String LOG_TAG = "myLogs";
 	static String json = "";
 	int flag = 0;
@@ -81,8 +81,11 @@ public class Open_order extends Fragment {
 		stop_loss = (TextView) view.findViewById(R.id.stop_loss_order);
 		volume_order = (TextView) view.findViewById(R.id.volume_order);
 		stop_loss_text = (TextView) view.findViewById(R.id.stop_loss_textview);
+		text_tp = (TextView) view.findViewById(R.id.text_tp);
+		tp_order_open = (TextView) view.findViewById(R.id.tp_order_open);
 		arrow = (TextView) view.findViewById(R.id.textView1);
-		stop_loss_text.setText(Html.fromHtml("S/L" + "<br />"));
+		stop_loss_text.setText(Html.fromHtml("S/L:" + "<br />"));
+		text_tp.setText(Html.fromHtml("T/P:" + "<br />"));
 		arrow.setText(Html.fromHtml("&#8594" + "<br />"));
 		
 		Bundle args = getArguments();
@@ -142,19 +145,27 @@ public class Open_order extends Fragment {
 
 		// Обновлятор
 		protected void onProgressUpdate(String... values) {
+			DecimalFormatSymbols format = new DecimalFormatSymbols();
+			format.setDecimalSeparator('.');
+			DecimalFormat format_number = new DecimalFormat("#,##0.00", format);
 			Double flag = Double.valueOf(values[6]);
 			Log.d(LOG_TAG, "Изменение: " + flag);
 			id_order.setText(Html.fromHtml(values[0] + "<br />"));
-			if ("sell".equals(values[4])) {
+			Log.d(LOG_TAG, "Профит: " + values[2]);
+			tp_order_open.setText(Html.fromHtml(values[2] + "<br />"));
+			double end_price_open;
+			end_price_open = new Double(format_number.format(((Double.valueOf(values[6])/Double.valueOf(values[5]))+Double.valueOf(values[1]))));
+			view_order.setTextColor(Color.BLUE);
+			
+			if ("sell".equals(values[4])) {			
 				view_order.setTextColor(Color.RED);
 				view_order.setText(Html.fromHtml(values[4] + "<br />"));
-			} else {
+			} else {			
 				view_order.setTextColor(Color.BLUE);
 				view_order.setText(Html.fromHtml(values[4] + "<br />"));
 			}
 			begin_price.setText(Html.fromHtml(values[1] + "<br />"));
-			Log.d(LOG_TAG, "Профит: " + values[2]);
-			end_price.setText(Html.fromHtml(values[2] + "<br />"));
+			end_price.setText(Html.fromHtml(end_price_open + "<br />"));
 			stop_loss.setText(Html.fromHtml(values[3] + "<br />"));
 			volume_order.setText(Html.fromHtml(values[5] + "<br />"));
 			if (flag < 0) {

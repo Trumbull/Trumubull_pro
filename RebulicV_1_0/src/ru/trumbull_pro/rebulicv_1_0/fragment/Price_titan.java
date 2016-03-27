@@ -39,7 +39,7 @@ public class Price_titan extends Fragment {
 	JSONParser jParser = new JSONParser();
 
 	// укажите свой адрес
-	private static String all_price_titan = "http://192.168.1.33/titan_price.php";
+	private static String all_price_titan = "http://192.168.1.34/titan_price.php";
 
 	// Имена узлов JSON
 	private static final String TAG_SUCCESS = "success";
