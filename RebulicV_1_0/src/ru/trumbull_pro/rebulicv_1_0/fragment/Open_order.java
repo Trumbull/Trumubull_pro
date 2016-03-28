@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.util.Log;
@@ -43,7 +44,7 @@ public class Open_order extends Fragment {
 	JSONParser jsonParser = new JSONParser();
 
 	// укажите свой адрес
-	private static final String url_order = "http://192.168.1.34/order.php";
+	private static final String url_order = "http://192.168.1.34/order_alpha.php";
 	// Имена узлов JSON
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_TAB_PRICE = "transaction";
@@ -54,14 +55,17 @@ public class Open_order extends Fragment {
 	private static final String TAG_STATUS = "status_transaction";
 	private static final String TAG_VOLUME = "volume";
 	private static final String TAG_CHANGE_SUM = "change_sum";
-	private static final String TAG_TIME = "time";
-
+	double change_comparison = 0;
+	int flag_repeat = 0;
+	final Handler handler = new Handler();
 	Animation anim;
-	private String id_transaction;
+	String id_transaction;
+	JSONArray transactionObj = null;
 	String name;
-	TextView tp_order_open, text_tp,arrow, stop_loss_text, id_order, name_textview, stop_loss, view_order, begin_price, end_price, price_change, volume_order;
+	TextView tp_order_open, text_tp, arrow, stop_loss_text, id_order, name_textview, stop_loss, view_order, begin_price,
+			end_price, price_change, volume_order;
 	final String LOG_TAG = "myLogs";
-	static String json = "";
+	JSONObject json = null;
 	int flag = 0;
 	DatabaseHelper dbHelper;
 	SQLiteDatabase db;
@@ -87,14 +91,15 @@ public class Open_order extends Fragment {
 		stop_loss_text.setText(Html.fromHtml("S/L:" + "<br />"));
 		text_tp.setText(Html.fromHtml("T/P:" + "<br />"));
 		arrow.setText(Html.fromHtml("&#8594" + "<br />"));
-		
+
 		Bundle args = getArguments();
-		if (args != null)
-		
+		if (args != null) {
+
 			id_transaction = args.getString("test_text");
+		}
 		Log.d(LOG_TAG, "Переданная переменная: " + id_transaction);
 		tp_order = new TaskOrder();
-		tp_order.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+		tp_order.execute();
 
 		return view;
 	}
@@ -105,62 +110,75 @@ public class Open_order extends Fragment {
 		@Override
 		protected String doInBackground(String... args) {
 			String[] values = new String[7];
-			int success;
-			try {
+			for (;;) {
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
 				params.add(new BasicNameValuePair("id_transaction", id_transaction));
 
 				// получаем информацию через запрос HTTP GET
-				JSONObject json = jsonParser.makeHttpRequest(url_order, "GET", params);
-
-				// ответ от json о товаре
+				json = jsonParser.makeHttpRequest(url_order, "GET", params);
 				// Log.d("Single Product Details", json.toString());
+				// ответ от json о товаре
 
-				// json success tag
-				success = json.getInt(TAG_SUCCESS);
+				try {
+					// json success tag
+					int success = json.getInt(TAG_SUCCESS);
+					if (success == 1) {
+						// если получили информацию о товаре
+						transactionObj = json.getJSONArray(TAG_TAB_PRICE);
+						for (int i = 0; i < transactionObj.length(); i++) {
+							// получим первый объект из массива JSON Array
+							JSONObject transaction = transactionObj.getJSONObject(i);
 
-				if (success == 1) {
-					// если получили информацию о товаре
-					JSONArray transactionObj = json.getJSONArray(TAG_TAB_PRICE);
-
-					// получим первый объект из массива JSON Array
-					JSONObject transaction = transactionObj.getJSONObject(0);
-					values[0] = transaction.getString(TAG_NAME);
-					Log.d(LOG_TAG, "Имя: " + values[0]);
-					values[1] = transaction.getString(TAG_PRICE);
-					values[2] = transaction.getString(TAG_TAKE_PROFIT);
-					values[3] = transaction.getString(TAG_STOP_LOSS);
-					values[4] = transaction.getString(TAG_STATUS);
-					values[5] = transaction.getString(TAG_VOLUME);
-					values[6] = transaction.getString(TAG_CHANGE_SUM);
-				} else {
-					// не нашли товар по pid
+							values[0] = transaction.getString(TAG_NAME);
+							values[1] = transaction.getString(TAG_PRICE);
+							values[2] = transaction.getString(TAG_TAKE_PROFIT);
+							values[3] = transaction.getString(TAG_STOP_LOSS);
+							values[4] = transaction.getString(TAG_STATUS);
+							values[5] = transaction.getString(TAG_VOLUME);
+							values[6] = transaction.getString(TAG_CHANGE_SUM);
+						}
+					} else {
+						// не нашли товар по pid
+					}
+					if (flag_repeat == 0) {
+						
+						publishProgress(values);
+					} else {
+						try {
+							TimeUnit.SECONDS.sleep(2);
+						} catch (InterruptedException e) {
+							// TODO Автоматически созданный блок catch
+							e.printStackTrace();
+						}
+						publishProgress(values);
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
 				}
-			} catch (JSONException e) {
-				e.printStackTrace();
+
 			}
-			publishProgress(values);
-			return null;
 		}
 
 		// Обновлятор
 		protected void onProgressUpdate(String... values) {
+
 			DecimalFormatSymbols format = new DecimalFormatSymbols();
 			format.setDecimalSeparator('.');
 			DecimalFormat format_number = new DecimalFormat("#,##0.00", format);
-			Double flag = Double.valueOf(values[6]);
-			Log.d(LOG_TAG, "Изменение: " + flag);
+			double change = Double.valueOf(values[6]);// сравнение
+			int flag_up = 0;// флаг обновления
 			id_order.setText(Html.fromHtml(values[0] + "<br />"));
-			Log.d(LOG_TAG, "Профит: " + values[2]);
+			
 			tp_order_open.setText(Html.fromHtml(values[2] + "<br />"));
 			double end_price_open;
-			end_price_open = new Double(format_number.format(((Double.valueOf(values[6])/Double.valueOf(values[5]))+Double.valueOf(values[1]))));
+			end_price_open = new Double(format_number
+					.format(((Double.valueOf(values[6]) / Double.valueOf(values[5])) + Double.valueOf(values[1]))));
 			view_order.setTextColor(Color.BLUE);
-			
-			if ("sell".equals(values[4])) {			
+
+			if ("sell".equals(values[4])) {
 				view_order.setTextColor(Color.RED);
 				view_order.setText(Html.fromHtml(values[4] + "<br />"));
-			} else {			
+			} else {
 				view_order.setTextColor(Color.BLUE);
 				view_order.setText(Html.fromHtml(values[4] + "<br />"));
 			}
@@ -168,22 +186,39 @@ public class Open_order extends Fragment {
 			end_price.setText(Html.fromHtml(end_price_open + "<br />"));
 			stop_loss.setText(Html.fromHtml(values[3] + "<br />"));
 			volume_order.setText(Html.fromHtml(values[5] + "<br />"));
-			if (flag < 0) {
-				price_change.setTextColor(Color.RED);
-				price_change.startAnimation(anim);
+			if (flag_repeat != 0) {
+				if (change == change_comparison) {
+					flag_up = 0;
+				} else {
+					flag_up = 1;
+				}
+				change_comparison = change;
+			} else {
+				change_comparison = change;
+				flag_repeat++;
+			}
+			Log.d(LOG_TAG, "Изменение: " + change);
+			
+			if (change < 0) {
+				if (flag_up == 1) {
+					price_change.setTextColor(Color.RED);
+					price_change.startAnimation(anim);
+				} else {
+					price_change.setTextColor(Color.RED);
+				}
 				price_change.setText(Html.fromHtml(values[6] + "<br />"));
 			} else {
-				if (flag == 0) {// начальная цена
-					price_change.setTextColor(Color.BLACK);
-					price_change.startAnimation(anim);
-					price_change.setText(Html.fromHtml(values[6] + "<br />"));
-				} else {
-					price_change.setTextColor(Color.BLUE);
-					price_change.startAnimation(anim);
-					price_change.setText(Html.fromHtml(values[6] + "<br />"));
+				if (flag_up == 1) {
+				price_change.setTextColor(Color.BLUE);
+				price_change.startAnimation(anim);
 				}
-
+				else{
+					price_change.setTextColor(Color.BLUE);
+				}
+				price_change.setText(Html.fromHtml(values[6] + "<br />"));
 			}
+			
+
 		}
 
 	}

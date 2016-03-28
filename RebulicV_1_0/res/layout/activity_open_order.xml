@@ -38,10 +38,12 @@
 
     <TextView
         android:id="@+id/price_change"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="32dp"
-        android:layout_above="@+id/end_price"
-        android:layout_alignParentRight="true" />
+        android:layout_above="@+id/relativeLayout2"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/relativeLayout1"
+        android:textSize="17dip" />
 
     <TextView
         android:id="@+id/name"
@@ -82,7 +84,7 @@
         android:layout_width="50dp"
         android:layout_height="32dp"
         android:layout_alignBottom="@+id/end_price"
-        android:layout_alignTop="@+id/end_price"
+        android:layout_alignTop="@+id/stop_loss_textview"
         android:layout_toRightOf="@+id/stop_loss_textview" />
 
     <TextView

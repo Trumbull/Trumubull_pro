@@ -64,13 +64,11 @@ public class Price extends Fragment {
 	final Handler handler = new Handler();
 	private static final int MENU_NEW_TRADE = 1;
 	private static final int MENU_OPEN_CHART = 0;
-	TextView quotes_cooper, quotes_cooper_1, quotes_cooper_2, price_change,
-			quotes_titan_1, quotes_titan_2;
+	TextView quotes_cooper, quotes_cooper_1, quotes_cooper_2, price_change, quotes_titan_1, quotes_titan_2;
 	RelativeLayout copper;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.price, container, false);
 		quotes_cooper = (TextView) view.findViewById(R.id.id_order);
 		quotes_cooper_1 = (TextView) view.findViewById(R.id.view_order);
@@ -97,14 +95,12 @@ public class Price extends Fragment {
 		return view;
 	}
 
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 
 		case R.id.copper:
-			menu.setHeaderTitle(Html.fromHtml("<font color=#2c2c2c>" + "Медь"
-					+ "</font>"));
+			menu.setHeaderTitle(Html.fromHtml("<font color=#2c2c2c>" + "Медь" + "</font>"));
 
 			menu.add(0, MENU_NEW_TRADE, 0, "Новая сделка");
 			menu.add(0, MENU_OPEN_CHART, 0, "Открыть график");
@@ -116,8 +112,7 @@ public class Price extends Fragment {
 		switch (item.getItemId()) {
 
 		case MENU_NEW_TRADE:
-			Toast.makeText(getActivity(), "Выбран пункт А", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(getActivity(), "Выбран пункт А", Toast.LENGTH_LONG).show();
 			return true;
 		case MENU_OPEN_CHART:
 
@@ -144,14 +139,13 @@ public class Price extends Fragment {
 											// сравнения
 			int flag_price_comparison = 0;
 			// Строим параметры
-			for(;;){
+			for (;;) {
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
 				// получим строку JSON из URL
-				JSONObject json = jParser.makeHttpRequest(url_all_products,
-						"GET", params);
+				JSONObject json = jParser.makeHttpRequest(url_all_products, "GET", params);
 
 				// Check your log cat for JSON reponse
-				//Log.d("All Products: ", json.toString());
+			    Log.d("All Products: ", json.toString());
 
 				try {
 
@@ -172,18 +166,17 @@ public class Price extends Fragment {
 							String change_price = c.getString(TAG_CHANGE_PRICE);
 							time = c.getInt(TAG_TIME);
 
-							min_price = new Double(format_number.format(Double
-									.valueOf(price_copper) - 0.1));
-							max_price = new Double(format_number.format(Double
-									.valueOf(price_copper) + 0.1)); // 0.1
-																	// разница
-																	// цену
-																	// продажи и
-																	// покупки,
-																	// по
-																	// умолчанию.
-																	// Надо
-																	// редактировать.
+							min_price = new Double(format_number.format(Double.valueOf(price_copper) - 0.1));
+							max_price = new Double(format_number.format(Double.valueOf(price_copper) + 0.1)); // 0.1
+																												// разница
+																												// цену
+																												// продажи
+																												// и
+																												// покупки,
+																												// по
+																												// умолчанию.
+																												// Надо
+																												// редактировать.
 							base_price = Double.valueOf(price_copper);
 							if (price_comparison == base_price) {// сравниваем
 																	// цену
@@ -196,8 +189,7 @@ public class Price extends Fragment {
 								time = 2;
 								flag_price_comparison++;
 								change_price = "0";
-								Log.d(LOG_TAG, "Биржа не работает: "
-										+ flag_price_comparison);
+								Log.d(LOG_TAG, "Биржа не работает: " + flag_price_comparison);
 							}
 							price_comparison = base_price;
 
@@ -230,7 +222,6 @@ public class Price extends Fragment {
 				}
 			}
 
-
 		}
 
 		// Обновлятор
@@ -252,10 +243,8 @@ public class Price extends Fragment {
 				if (flag == 0) {// начальная цена
 					quotes_cooper_1.setTextColor(Color.BLACK);
 					quotes_cooper_2.setTextColor(Color.BLACK);
-					quotes_cooper_1
-							.setText(Html.fromHtml(values[0] + "<br />"));
-					quotes_cooper_2
-							.setText(Html.fromHtml(values[1] + "<br />"));
+					quotes_cooper_1.setText(Html.fromHtml(values[0] + "<br />"));
+					quotes_cooper_2.setText(Html.fromHtml(values[1] + "<br />"));
 				} else {
 					quotes_cooper_1.setTextColor(Color.BLUE);
 					quotes_cooper_2.setTextColor(Color.BLUE);
@@ -263,11 +252,9 @@ public class Price extends Fragment {
 					price_change.startAnimation(anim_ghost);
 					price_change.setText("+" + values[2]);
 					quotes_cooper_1.startAnimation(anim);
-					quotes_cooper_1
-							.setText(Html.fromHtml(values[0] + "<br />"));
+					quotes_cooper_1.setText(Html.fromHtml(values[0] + "<br />"));
 					quotes_cooper_2.startAnimation(anim);
-					quotes_cooper_2
-							.setText(Html.fromHtml(values[1] + "<br />"));
+					quotes_cooper_2.setText(Html.fromHtml(values[1] + "<br />"));
 				}
 
 			}
@@ -277,8 +264,7 @@ public class Price extends Fragment {
 			super.onPostExecute(result);
 			tp.cancel(false);
 			Log.d(LOG_TAG, "Это в середине AsyncTask : " + tp);
-			Toast.makeText(getActivity(), "Биржа не доступна!",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), "Биржа не доступна!", Toast.LENGTH_LONG).show();
 			Log.d(LOG_TAG, "Статус задачи: " + tp.getStatus().toString());
 		}
 

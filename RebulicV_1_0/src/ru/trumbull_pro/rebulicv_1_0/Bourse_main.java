@@ -71,7 +71,7 @@ public class Bourse_main extends Activity implements OnClickListener {
 	Fragment frag2 = new Price();
 	Fragment frag3 = new Price_titan();
 	Fragment frag_order = new Transaction_order();
-	Fragment open_order= new Open_order();
+	Fragment open_order = new Open_order();
 	FragmentTransaction ft;
 	final int MENU_NAME = 0;
 	final int MENU_NEW_TRADE = 1;
@@ -130,8 +130,9 @@ public class Bourse_main extends Activity implements OnClickListener {
 		p4 = (TableRow) findViewById(R.id.p4);
 		p4.setOnClickListener(this);
 		mFragmentManager = getFragmentManager();
-		new Order_massiv().execute(); //собираем в массив информацию о сделках,с привязкой к IMEI 
-		
+		new Order_massiv().execute(); // собираем в массив информацию о
+										// сделках,с привязкой к IMEI
+
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
@@ -183,14 +184,14 @@ public class Bourse_main extends Activity implements OnClickListener {
 			Intent intent2 = new Intent(this, Trade_copper.class);
 			startActivity(intent2);
 			break;
-		case R.id.p4: 
+		case R.id.p4:
 			if (flag == 1) {
 				ft.hide(frag2);
 				ft.hide(frag3);
 			}
-			//new Order_massiv().execute();
+			// new Order_massiv().execute();
 			new ButtonListener_Open_Order_1(String.valueOf(id_order_massiv[0]));
-			
+
 			break;
 
 		}
@@ -267,7 +268,7 @@ public class Bourse_main extends Activity implements OnClickListener {
 			pDialog.setMessage("Загружается информация о сделках. Подождите...");
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(true);
-			pDialog.show();			
+			pDialog.show();
 		}
 
 		protected String doInBackground(String... args) {
@@ -297,7 +298,7 @@ public class Bourse_main extends Activity implements OnClickListener {
 					for (int i = 0; i < orderObj.length(); i++) {
 						JSONObject order = orderObj.getJSONObject(i);
 						id_order = order.getString(TAG_ID);
-						//Log.d(LOG_TAG, "ID: " + Integer.valueOf(id_order));
+						// Log.d(LOG_TAG, "ID: " + Integer.valueOf(id_order));
 						id_order_massiv[i] = Integer.valueOf(id_order);
 
 					}
@@ -319,11 +320,11 @@ public class Bourse_main extends Activity implements OnClickListener {
 			}
 		}
 	}
-	
-class ButtonListener_Open_Order_1{
-		
+
+	class ButtonListener_Open_Order_1 {
+
 		private String testText;
-		
+
 		public ButtonListener_Open_Order_1(String testText) {
 			super();
 			this.testText = testText;
@@ -338,9 +339,6 @@ class ButtonListener_Open_Order_1{
 			manager.executePendingTransactions();
 		}
 
-			
-		
-		
 	}
-	
+
 }
