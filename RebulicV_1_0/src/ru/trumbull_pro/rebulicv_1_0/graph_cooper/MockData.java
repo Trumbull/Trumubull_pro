@@ -16,7 +16,7 @@ public class MockData {
 	static JSONParser jParser = new JSONParser();
 
 	// укажите свой адрес
-	private static String url_all_products = "http://192.168.1.33/get_all_products.php";
+	private static String url_all_products = "http://192.168.1.34/get_all_products.php";
 
 	// Имена узлов JSON
 	private static final String TAG_SUCCESS = "success";

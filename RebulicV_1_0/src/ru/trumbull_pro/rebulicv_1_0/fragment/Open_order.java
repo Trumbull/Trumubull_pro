@@ -12,9 +12,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -23,11 +26,13 @@ import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
@@ -55,6 +60,8 @@ public class Open_order extends Fragment {
 	private static final String TAG_STATUS = "status_transaction";
 	private static final String TAG_VOLUME = "volume";
 	private static final String TAG_CHANGE_SUM = "change_sum";
+	private static final int MENU_T_P_S_L = 1;
+	private static final int MENU_OPEN_CHART = 0;
 	double change_comparison = 0;
 	int flag_repeat = 0;
 	final Handler handler = new Handler();
@@ -62,8 +69,10 @@ public class Open_order extends Fragment {
 	String id_transaction;
 	JSONArray transactionObj = null;
 	String name;
+	String tp, sl;
 	TextView tp_order_open, text_tp, arrow, stop_loss_text, id_order, name_textview, stop_loss, view_order, begin_price,
 			end_price, price_change, volume_order;
+	RelativeLayout price_position_1;
 	final String LOG_TAG = "myLogs";
 	JSONObject json = null;
 	int flag = 0;
@@ -82,16 +91,12 @@ public class Open_order extends Fragment {
 		begin_price = (TextView) view.findViewById(R.id.begin_price);
 		end_price = (TextView) view.findViewById(R.id.end_price);
 		price_change = (TextView) view.findViewById(R.id.price_change);
-		stop_loss = (TextView) view.findViewById(R.id.stop_loss_order);
 		volume_order = (TextView) view.findViewById(R.id.volume_order);
-		stop_loss_text = (TextView) view.findViewById(R.id.stop_loss_textview);
-		text_tp = (TextView) view.findViewById(R.id.text_tp);
-		tp_order_open = (TextView) view.findViewById(R.id.tp_order_open);
 		arrow = (TextView) view.findViewById(R.id.textView1);
-		stop_loss_text.setText(Html.fromHtml("S/L:" + "<br />"));
-		text_tp.setText(Html.fromHtml("T/P:" + "<br />"));
-		arrow.setText(Html.fromHtml("&#8594" + "<br />"));
-
+		// arrow.setText(Html.fromHtml("&#8594" + "<br />"));
+		arrow.setText(Html.fromHtml("&#8594" + "  "));
+		price_position_1 = (RelativeLayout) view.findViewById(R.id.price_position_1);
+		registerForContextMenu(price_position_1);
 		Bundle args = getArguments();
 		if (args != null) {
 
@@ -102,6 +107,41 @@ public class Open_order extends Fragment {
 		tp_order.execute();
 
 		return view;
+	}
+
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+
+		case R.id.price_position_1:
+			menu.setHeaderTitle(Html.fromHtml("<font color=#2c2c2c>" + "Медь" + "</font>"));
+
+			menu.add(0, MENU_T_P_S_L, 0, "T/P и S/l");
+			menu.add(0, MENU_OPEN_CHART, 0, "Открыть график");
+			break;
+		}
+	}
+
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+
+		case MENU_T_P_S_L:
+			new AlertDialog.Builder(getActivity()).setTitle("T/P и S/P")
+					.setMessage("T/P: " + tp + " " + "S/L: " + sl + " Изменить?")
+					.setNegativeButton(android.R.string.no, null)
+					.setPositiveButton(android.R.string.yes, new OnClickListener() {
+						public void onClick(DialogInterface arg0, int arg1) {
+							// SomeActivity - имя класса Activity для которой
+							// переопределяем onBackPressed();
+
+						}
+					}).create().show();
+			return true;
+		case MENU_OPEN_CHART:
+
+			return true;
+		}
+		return super.onContextItemSelected(item);
 	}
 
 	private class TaskOrder extends AsyncTask<String, String, String> {
@@ -141,7 +181,7 @@ public class Open_order extends Fragment {
 						// не нашли товар по pid
 					}
 					if (flag_repeat == 0) {
-						
+
 						publishProgress(values);
 					} else {
 						try {
@@ -167,9 +207,9 @@ public class Open_order extends Fragment {
 			DecimalFormat format_number = new DecimalFormat("#,##0.00", format);
 			double change = Double.valueOf(values[6]);// сравнение
 			int flag_up = 0;// флаг обновления
+			tp = values[2];
+			sl = values[3];
 			id_order.setText(Html.fromHtml(values[0] + "<br />"));
-			
-			tp_order_open.setText(Html.fromHtml(values[2] + "<br />"));
 			double end_price_open;
 			end_price_open = new Double(format_number
 					.format(((Double.valueOf(values[6]) / Double.valueOf(values[5])) + Double.valueOf(values[1]))));
@@ -184,7 +224,6 @@ public class Open_order extends Fragment {
 			}
 			begin_price.setText(Html.fromHtml(values[1] + "<br />"));
 			end_price.setText(Html.fromHtml(end_price_open + "<br />"));
-			stop_loss.setText(Html.fromHtml(values[3] + "<br />"));
 			volume_order.setText(Html.fromHtml(values[5] + "<br />"));
 			if (flag_repeat != 0) {
 				if (change == change_comparison) {
@@ -198,7 +237,7 @@ public class Open_order extends Fragment {
 				flag_repeat++;
 			}
 			Log.d(LOG_TAG, "Изменение: " + change);
-			
+
 			if (change < 0) {
 				if (flag_up == 1) {
 					price_change.setTextColor(Color.RED);
@@ -209,15 +248,13 @@ public class Open_order extends Fragment {
 				price_change.setText(Html.fromHtml(values[6] + "<br />"));
 			} else {
 				if (flag_up == 1) {
-				price_change.setTextColor(Color.BLUE);
-				price_change.startAnimation(anim);
-				}
-				else{
+					price_change.setTextColor(Color.BLUE);
+					price_change.startAnimation(anim);
+				} else {
 					price_change.setTextColor(Color.BLUE);
 				}
 				price_change.setText(Html.fromHtml(values[6] + "<br />"));
 			}
-			
 
 		}
 
