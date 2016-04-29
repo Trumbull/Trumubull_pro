@@ -44,7 +44,7 @@ public class DynamicGraph_Cooper extends Activity {
 		view = line.getView(this);
 		setContentView(view);
 	}
-
+	
 	public void onBackPressed() {
 		new AlertDialog.Builder(this).setTitle("Вeрнуться?")
 				.setMessage("Вы действительно хотите выйти?")

@@ -27,6 +27,8 @@ public class Search_minerals extends Activity implements OnClickListener {
 		tvProgressHorizontal = (TextView) findViewById(R.id.tv_progress_horizontal);
 		a1 = (EditText) findViewById(R.id.editText1);
 		b1 = (EditText) findViewById(R.id.editText2);
+		a1.setText("0.00");
+		b1.setText("0.00");
 		Button btnScan = (Button) findViewById(R.id.button1);
 		btnScan.setOnClickListener(this);
 
@@ -42,16 +44,16 @@ public class Search_minerals extends Activity implements OnClickListener {
 			b1.setError("¬ведите ширину");
 			return;
 		}
-		
+
 		Intent intent = new Intent(this, Minerals.class);
-		
+
 		intent.putExtra("a1", a1.getText().toString());
 		progress = progress + 50;
 		intent.putExtra("b1", b1.getText().toString());
 		progress = progress + 50;
 		postProgress(progress);
 		startActivity(intent);
-	
+
 	}
 
 	private void postProgress(int progress) {

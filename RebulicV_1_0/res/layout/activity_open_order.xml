@@ -31,7 +31,7 @@
 
     <TextView
         android:id="@+id/begin_price"
-        android:layout_width="70dp"
+        android:layout_width="90dp"
         android:layout_height="32dp"
         android:layout_below="@+id/view_order"
         android:textSize="20dip" />
@@ -75,16 +75,8 @@
         android:layout_width="70dp"
         android:layout_height="32dp"
         android:layout_alignBottom="@+id/begin_price"
-        android:layout_alignTop="@+id/begin_price"
-        android:layout_toRightOf="@+id/textView1"
-        android:textSize="20dip" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="20dp"
-        android:layout_height="23dp"
-        android:layout_alignLeft="@+id/view_order"
         android:layout_below="@+id/view_order"
-        android:textSize="20sp" />
+        android:layout_toRightOf="@+id/begin_price"
+        android:textSize="20dip" />
 
 </RelativeLayout>

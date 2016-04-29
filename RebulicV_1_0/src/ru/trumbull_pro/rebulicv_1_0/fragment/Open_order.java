@@ -92,9 +92,9 @@ public class Open_order extends Fragment {
 		end_price = (TextView) view.findViewById(R.id.end_price);
 		price_change = (TextView) view.findViewById(R.id.price_change);
 		volume_order = (TextView) view.findViewById(R.id.volume_order);
-		arrow = (TextView) view.findViewById(R.id.textView1);
+		// arrow = (TextView) view.findViewById(R.id.textView1);
 		// arrow.setText(Html.fromHtml("&#8594" + "<br />"));
-		arrow.setText(Html.fromHtml("&#8594" + "  "));
+		// arrow.setText(Html.fromHtml("&#8594"));
 		price_position_1 = (RelativeLayout) view.findViewById(R.id.price_position_1);
 		registerForContextMenu(price_position_1);
 		Bundle args = getArguments();
@@ -209,7 +209,7 @@ public class Open_order extends Fragment {
 			int flag_up = 0;// флаг обновления
 			tp = values[2];
 			sl = values[3];
-			id_order.setText(Html.fromHtml(values[0] + "<br />"));
+			id_order.setText(Html.fromHtml(values[0] + "," + "<br />"));
 			double end_price_open;
 			end_price_open = new Double(format_number
 					.format(((Double.valueOf(values[6]) / Double.valueOf(values[5])) + Double.valueOf(values[1]))));
@@ -217,12 +217,12 @@ public class Open_order extends Fragment {
 
 			if ("sell".equals(values[4])) {
 				view_order.setTextColor(Color.RED);
-				view_order.setText(Html.fromHtml(values[4] + "<br />"));
+				view_order.setText(Html.fromHtml(" " + values[4] + "<br />"));
 			} else {
 				view_order.setTextColor(Color.BLUE);
 				view_order.setText(Html.fromHtml(values[4] + "<br />"));
 			}
-			begin_price.setText(Html.fromHtml(values[1] + "<br />"));
+			begin_price.setText(Html.fromHtml(values[1] + " " + "&#8594" + "<br />"));
 			end_price.setText(Html.fromHtml(end_price_open + "<br />"));
 			volume_order.setText(Html.fromHtml(values[5] + "<br />"));
 			if (flag_repeat != 0) {
@@ -257,7 +257,10 @@ public class Open_order extends Fragment {
 			}
 
 		}
-
+		protected void onCancelled() {
+			super.onCancelled();
+		
+		}
 	}
 
 }

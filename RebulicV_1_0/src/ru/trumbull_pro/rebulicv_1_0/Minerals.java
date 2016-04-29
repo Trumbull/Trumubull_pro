@@ -48,10 +48,10 @@ public class Minerals extends Activity  {
 				"Сканирование закончено!", Toast.LENGTH_SHORT);
 		toast.show();
 
-		int a = Integer.parseInt(a2);
-		int b = Integer.parseInt(b2);
-		int p = a * b;
-		int r = (int) (Math.floor(p / 9));
+		double a = Double.parseDouble(a2);
+		double b = Double.parseDouble(b2);
+		double p = a * b;
+		int r = (int) (Math.floor(p / 32));
 		Log.d(LOG_TAG, "Площадь: " + r);
 		int titan_deposits = 0;
 		int titan_deposits1 = 0;
