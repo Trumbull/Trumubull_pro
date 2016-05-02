@@ -128,9 +128,9 @@ public class Vse_klienti extends javax.swing.JFrame {
             table.getColumnModel().getColumn(2).setCellRenderer(leftRenderer);
             table.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
             table.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
-            //размеры столбцов
-            
-             /*
+
+            //размеры столбцов            
+            /*
             TableColumnModel colsize = table.getColumnModel();
             colsize.getColumn(0).setPreferredWidth(100);
             colsize.getColumn(1).setPreferredWidth(80);
@@ -139,7 +139,7 @@ public class Vse_klienti extends javax.swing.JFrame {
             colsize.getColumn(4).setPreferredWidth(65);
             colsize.getColumn(5).setPreferredWidth(180);
              */
-//Строки
+            //Строки
             for (int i = 0; i <= (id - 1); i++) {
 
                 model.addRow(new Object[0]);
