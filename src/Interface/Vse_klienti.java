@@ -5,7 +5,10 @@
  */
 package Interface;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.LayoutManager;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,13 +19,20 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 public class Vse_klienti extends javax.swing.JFrame {
 
     @SuppressWarnings("CallToPrintStackTrace")
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// определяем размер экрана
+
     public Vse_klienti() throws SQLException {
         Map<Integer, String> codes = new HashMap<>();
         String url = "jdbc:mysql://localhost:3306/mydb", user = "root", password = "";
@@ -37,7 +47,7 @@ public class Vse_klienti extends javax.swing.JFrame {
             String mili[] = new String[500];
             String nomer_pasporta[] = new String[500];
             String data_rog[] = new String[500];
-            int id_flag[]= new int[500]; // id стран
+            int id_flag[] = new int[500]; // id стран
             try (PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM `klient`")) {
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
@@ -68,7 +78,7 @@ public class Vse_klienti extends javax.swing.JFrame {
                         mili[shet] = rs.getString("Mili");
                         nomer_pasporta[shet] = rs.getString("Nomer_pasporta");
                         data_rog[shet] = rs.getString("Data_rogdeniya");
-                        id_flag[shet]=rs.getInt("Strana_id");
+                        id_flag[shet] = rs.getInt("Strana_id");
                         shet++;
                     }
                 }
@@ -80,43 +90,52 @@ public class Vse_klienti extends javax.swing.JFrame {
             }*/
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            setBounds(60, 100, 280, 500);//размеры окна таблицы
+            setBounds(100, 100, 280, 500);//размеры окна таблицы
 
             setTitle("Сведения о клиентах");
-
-            getContentPane().setLayout(null);
 //Скролл
             JScrollPane scrollPane = new JScrollPane();
+            System.out.println("Ширина: " + screenSize.height);
+            scrollPane.setBounds(153, 53, 628, screenSize.height-120);
 
-            scrollPane.setBounds(53, 53, 1000, 250);
-
+            getContentPane().setLayout(new BorderLayout());
             getContentPane().add(scrollPane);
 //Таблица
             JTable table = new JTable();
             scrollPane.setViewportView(table);
-
+            //getContentPane().add(scrollPane, BorderLayout.CENTER);
             DefaultTableModel model = (DefaultTableModel) table.getModel();
-            model.addColumn("id");
+
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+            //setBounds(0, 0, screenSize.width, screenSize.height);
+            //model.addColumn("id");
             model.addColumn("Фамилия");
             model.addColumn("Имя");
             model.addColumn("Отчество");
             model.addColumn("Дата рождения");
-            model.addColumn("Номер паспорта");
             model.addColumn("Мили");
             model.addColumn("Страна");
 
+            //размеры столбцов
+            TableColumnModel colsize = table.getColumnModel();
+            colsize.getColumn(0).setPreferredWidth(100);
+            colsize.getColumn(1).setPreferredWidth(80);
+            colsize.getColumn(2).setPreferredWidth(100);
+            colsize.getColumn(3).setPreferredWidth(80);
+            colsize.getColumn(4).setPreferredWidth(65);
+            colsize.getColumn(5).setPreferredWidth(180);
 //Строки
             for (int i = 0; i <= (id - 1); i++) {
 
                 model.addRow(new Object[0]);
-                model.setValueAt(i + 1, i, 0);
-                model.setValueAt(familiya[i], i, 1);
-                model.setValueAt(imja[i], i, 2);
-                model.setValueAt(otchestvo[i], i, 3);
-                model.setValueAt(data_rog[i], i, 4);
-                model.setValueAt(nomer_pasporta[i], i, 5);
-                model.setValueAt(mili[i], i, 6);
-                model.setValueAt(codes.get(id_flag[i]), i, 7);
+                //model.setValueAt(i + 1, i, 0);
+                model.setValueAt(familiya[i], i, 0);
+                model.setValueAt(imja[i], i, 1);
+                model.setValueAt(otchestvo[i], i, 2);
+                model.setValueAt(data_rog[i], i, 3);
+                model.setValueAt(mili[i], i, 4);
+                model.setValueAt(codes.get(id_flag[i]), i, 5);
 
             }
 
@@ -127,7 +146,8 @@ public class Vse_klienti extends javax.swing.JFrame {
             se.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-        } 
+        }
+
         initComponents();
     }
 
@@ -141,12 +161,25 @@ public class Vse_klienti extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setExtendedState(MAXIMIZED_BOTH
+        );
+        setLocationByPlatform(true);
+        setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1204, Short.MAX_VALUE)
+            .addGap(0, 961, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,6 +188,14 @@ public class Vse_klienti extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -171,16 +212,24 @@ public class Vse_klienti extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Vse_klienti.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Vse_klienti.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Vse_klienti.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Vse_klienti.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Vse_klienti.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Vse_klienti.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Vse_klienti.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Vse_klienti.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -189,8 +238,10 @@ public class Vse_klienti extends javax.swing.JFrame {
             public void run() {
                 try {
                     new Vse_klienti().setVisible(true);
+
                 } catch (SQLException ex) {
-                    Logger.getLogger(Vse_klienti.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Vse_klienti.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
