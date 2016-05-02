@@ -47,7 +47,7 @@ public class Vse_klienti extends javax.swing.JFrame {
             String familiya[] = new String[500];
             String otchestvo[] = new String[500];
             String mili[] = new String[500];
-            String nomer_pasporta[] = new String[500];
+            //String nomer_pasporta[] = new String[500];
             String data_rog[] = new String[500];
             int id_flag[] = new int[500]; // id стран
             try (PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM `klient`")) {
@@ -78,7 +78,7 @@ public class Vse_klienti extends javax.swing.JFrame {
                         familiya[shet] = rs.getString("Familiya");
                         otchestvo[shet] = rs.getString("Otshestvo");
                         mili[shet] = rs.getString("Mili");
-                        nomer_pasporta[shet] = rs.getString("Nomer_pasporta");
+                        //nomer_pasporta[shet] = rs.getString("Nomer_pasporta");
                         data_rog[shet] = rs.getString("Data_rogdeniya");
                         id_flag[shet] = rs.getInt("Strana_id");
                         shet++;
