@@ -19,10 +19,12 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -96,7 +98,7 @@ public class Vse_klienti extends javax.swing.JFrame {
 //Скролл
             JScrollPane scrollPane = new JScrollPane();
             System.out.println("Ширина: " + screenSize.height);
-            scrollPane.setBounds(153, 53, 628, screenSize.height-120);
+            scrollPane.setBounds(0, 0, screenSize.width, screenSize.height - 120);
 
             getContentPane().setLayout(new BorderLayout());
             getContentPane().add(scrollPane);
@@ -106,8 +108,7 @@ public class Vse_klienti extends javax.swing.JFrame {
             //getContentPane().add(scrollPane, BorderLayout.CENTER);
             DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
+            //table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
             //setBounds(0, 0, screenSize.width, screenSize.height);
             //model.addColumn("id");
             model.addColumn("Фамилия");
@@ -117,14 +118,27 @@ public class Vse_klienti extends javax.swing.JFrame {
             model.addColumn("Мили");
             model.addColumn("Страна");
 
+            //выравнивание таблицы
+            DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+            DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+            rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
+            leftRenderer.setHorizontalAlignment(JLabel.LEFT);
+            table.getColumnModel().getColumn(0).setCellRenderer(leftRenderer);
+            table.getColumnModel().getColumn(1).setCellRenderer(leftRenderer);
+            table.getColumnModel().getColumn(2).setCellRenderer(leftRenderer);
+            table.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+            table.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
             //размеры столбцов
+/*
             TableColumnModel colsize = table.getColumnModel();
+
             colsize.getColumn(0).setPreferredWidth(100);
             colsize.getColumn(1).setPreferredWidth(80);
             colsize.getColumn(2).setPreferredWidth(100);
             colsize.getColumn(3).setPreferredWidth(80);
             colsize.getColumn(4).setPreferredWidth(65);
             colsize.getColumn(5).setPreferredWidth(180);
+             */
 //Строки
             for (int i = 0; i <= (id - 1); i++) {
 
