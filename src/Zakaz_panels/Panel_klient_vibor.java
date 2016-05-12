@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,14 +24,15 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-public class Panel_1 extends JPanel {
+//Таблица с клиентами и кнопками 
+public class Panel_klient_vibor extends JPanel {
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// определяем размер экрана
     int flag;
     private javax.swing.JLabel jLabel1;
     public JButton b3;
 
-    public Panel_1() {
+    public Panel_klient_vibor() {
         JButton b1 = new JButton("Внести");;
         JButton b2 = new JButton("Добавить нового клиента");
         b3 = new JButton("Отмена");
@@ -145,28 +148,24 @@ public class Panel_1 extends JPanel {
         } catch (Exception e) {
         }
         b2.addActionListener((ActionEvent e) -> {
-            //panel.setVisible(false);
-            //remove(panel);
-            revalidate();
-            repaint();
-            add(new Panel_1());
-            /*
-            System.out.print("Нажата");
-            JPanel panel1 = new JPanel();
-            panel1.setBounds(0, 0, screenSize.width, screenSize.height);
-            JButton b5 = new JButton("fsdf");
-            panel1.add(b5);
-            getContentPane().add(panel1);
-             */
+            this.removeAll();
+            this.revalidate();
+            this.repaint();
+            this.updateUI();
+            this.add(new Panel_klient_new());
         });
 
         b3.addActionListener((ActionEvent e) -> {
             System.out.println("Работает!");
-            removeAll();
-            revalidate();
-            repaint();
+            this.removeAll();
+            this.revalidate();
+            this.repaint();
             this.updateUI();
-            this.add(new Panel_begin());
+            try {
+                this.add(new Panel_begin());
+            } catch (SQLException ex) {
+                Logger.getLogger(Panel_klient_vibor.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
     }

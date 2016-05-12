@@ -5,7 +5,7 @@
  */
 package Interface;
 
-import Zakaz_panels.Panel_1;
+import Zakaz_panels.Panel_klient_vibor;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -261,7 +261,7 @@ public class Test extends javax.swing.JFrame {
             getContentPane().remove(panel);
             getContentPane().revalidate();
             getContentPane().repaint();
-            getContentPane().add(new Panel_1());
+            getContentPane().add(new Panel_klient_vibor());
             /*
             System.out.print("Нажата");
             JPanel panel1 = new JPanel();
