@@ -7,7 +7,7 @@ public class Conn {
     public final String password;
 
     public Conn() {
-        url = "jdbc:mysql://localhost:3306/mydb";
+        url = "jdbc:mysql://localhost:3306/mydb?useUnicode=true&characterEncoding=utf8";
         user = "root";
         password = "";
     }

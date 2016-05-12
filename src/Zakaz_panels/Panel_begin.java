@@ -48,6 +48,9 @@ public class Panel_begin extends JPanel {
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// определяем размер экрана
     private javax.swing.JComboBox<String> jComboBox_otk_strana;
     private javax.swing.JComboBox<String> jComboBox_kuda_strana;
+    private String otk_gorod;
+    private String kuda_gorod;
+    int gorod_begin = 0;
 
     public Panel_begin() throws SQLException {
         String strana[] = new String[239];
@@ -108,6 +111,10 @@ public class Panel_begin extends JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        jButton2.addActionListener((ActionEvent e) -> {
+            insert_gorods(url, user, password);
+        });
+
         gui(strana, url, user, password);
 
     }
@@ -121,10 +128,10 @@ public class Panel_begin extends JPanel {
         ArrayList<String> gorod_kuda = new ArrayList<>(); //динамический массив
         ArrayList<String> IATA_kuda = new ArrayList<>();
         ArrayList<String> ICAO_kuda = new ArrayList<>();
-        int win_w = screenSize.width / 2 - 180;
+        int win_w = screenSize.width / 2 - 190;
         int win_h = screenSize.height / 3 - 180;
         int w = 200;
-        int w_field = 200;
+        int w_field = 220;
         int h = 30;
         //Взрослый
 
@@ -154,24 +161,45 @@ public class Panel_begin extends JPanel {
         jComboBox_otk_strana.setLocation(win_w, win_h + 120);
         jComboBox_otk_gorod.setSize(w_field, h);
         jComboBox_otk_gorod.setLocation(win_w + w, win_h + 120);
+        jComboBox_otk_gorod.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent event) {
+                gorod_begin = jComboBox_otk_gorod.getSelectedIndex();
+                otk_gorod = (String) jComboBox_otk_gorod.getSelectedItem();
+
+            }
+        });
 
         //Куда
         jLabel3.setSize(w, h);
         jLabel3.setLocation(win_w, win_h + 150);
         Combox_kuda(strana, url, user, password, gorod_kuda, IATA_kuda, ICAO_kuda, gorod, IATA, ICAO);
-        jComboBox_kuda_strana.setSize(w_field, h);
+        jComboBox_kuda_strana.setSize(w, h);
         jComboBox_kuda_strana.setLocation(win_w, win_h + 180);
         jComboBox_kuda_gorod.setSize(w_field, h);
         jComboBox_kuda_gorod.setLocation(win_w + w, win_h + 180);
+        jComboBox_kuda_gorod.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent event) {
+                kuda_gorod = (String) jComboBox_kuda_gorod.getSelectedItem();
+
+            }
+        });
 
         //Класс обслуживания
         jLabel4.setSize(w, h);
         jLabel4.setLocation(win_w, win_h + 210);
         jComboBox_klass_obsl.setSize(w_field, h);
         jComboBox_klass_obsl.setLocation(win_w + w, win_h + 210);
+        jComboBox_klass_obsl.addItem("Эконом");
+        jComboBox_klass_obsl.addItem("Комфорт");
+        jComboBox_klass_obsl.addItem("Люкс");
 
-        jButton1.setSize(w_field, h);
+        //Кнопки
+        //Отмена
+        jButton1.setSize(w, h);
         jButton1.setLocation(win_w, win_h + 290);
+        //Добавить
         jButton2.setSize(w_field, h);
         jButton2.setLocation(win_w + w, win_h + 290);
 
@@ -241,9 +269,11 @@ public class Panel_begin extends JPanel {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
                 for (int i = 0; i < gorod.size(); i++) {
 
-                    jComboBox_otk_gorod.addItem(gorod.get(i) + " (" + IATA.get(i) + "," + ICAO.get(i) + ")");
+                    //jComboBox_otk_gorod.addItem(gorod.get(i) + " (" + IATA.get(i) + "," + ICAO.get(i) + ")");
+                    jComboBox_otk_gorod.addItem(gorod.get(i));
                 }
                 gorod.removeAll(gorod);
                 IATA.removeAll(IATA);
@@ -296,8 +326,8 @@ public class Panel_begin extends JPanel {
                     e.printStackTrace();
                 }
                 for (int i = 0; i < gorod_kuda.size(); i++) {
-
-                    jComboBox_kuda_gorod.addItem(gorod_kuda.get(i) + " (" + IATA_kuda.get(i) + "," + ICAO_kuda.get(i) + ")");
+                    //jComboBox_kuda_gorod.addItem(gorod_kuda.get(i) + " (" + IATA_kuda.get(i) + "," + ICAO_kuda.get(i) + ")");
+                    jComboBox_kuda_gorod.addItem(gorod_kuda.get(i));
                 }
                 gorod_kuda.removeAll(gorod);
                 IATA_kuda.removeAll(IATA);
@@ -308,4 +338,23 @@ public class Panel_begin extends JPanel {
         );
     }
 
+    public void insert_gorods(String url, String user, String password) {
+        try (Connection c = DriverManager.getConnection(url, user, password)) {
+            c.setAutoCommit(false);
+            c.setReadOnly(false);
+            try (PreparedStatement ps2 = c.prepareStatement("UPDATE `rejs_gorod` SET `Gorod_otk`=?, `Gorod_kuda`=?  WHERE id=?")) {
+                ps2.setString(1, otk_gorod);
+                ps2.setString(2, kuda_gorod);
+                ps2.setInt(3, 1);
+                ps2.executeUpdate();
+            }
+            c.commit();
+            c.commit();
+            c.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
