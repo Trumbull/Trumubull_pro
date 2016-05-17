@@ -5,7 +5,7 @@
  */
 package Interface;
 
-import Zakaz_panels.Panel_klient_vibor;
+import Zakaz_panels.Panel_vibor_rejs;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -261,15 +261,19 @@ public class Test extends javax.swing.JFrame {
             getContentPane().remove(panel);
             getContentPane().revalidate();
             getContentPane().repaint();
-            getContentPane().add(new Panel_klient_vibor());
-            /*
-            System.out.print("Нажата");
-            JPanel panel1 = new JPanel();
-            panel1.setBounds(0, 0, screenSize.width, screenSize.height);
-            JButton b5 = new JButton("fsdf");
-            panel1.add(b5);
-            getContentPane().add(panel1);
-             */
+            try {
+                getContentPane().add(new Panel_vibor_rejs());
+                /*
+                System.out.print("Нажата");
+                JPanel panel1 = new JPanel();
+                panel1.setBounds(0, 0, screenSize.width, screenSize.height);
+                JButton b5 = new JButton("fsdf");
+                panel1.add(b5);
+                getContentPane().add(panel1);
+                */
+            } catch (SQLException ex) {
+                Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
     }

@@ -1,9 +1,6 @@
 package Zakaz_panels;
 
 import Connect.Conn;
-import Interface.Mesto;
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -14,14 +11,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 //Добавить Заказ
 public class Panel_begin extends JPanel {
@@ -50,6 +50,9 @@ public class Panel_begin extends JPanel {
     private javax.swing.JComboBox<String> jComboBox_kuda_strana;
     private String otk_gorod;
     private String kuda_gorod;
+    private int adult;
+    private int child;
+    private int baby;
     int gorod_begin = 0;
 
     public Panel_begin() throws SQLException {
@@ -111,9 +114,28 @@ public class Panel_begin extends JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         jButton2.addActionListener((ActionEvent e) -> {
-            insert_gorods(url, user, password);
-        });
+            if (otk_gorod == null || kuda_gorod == null || adult == 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Ошибка неполные данные!");
+            } else {
+                System.out.println("Взрослый: " + adult);
+                insert_gorods(url, user, password);
+                insert_vid_bileta(url, user, password);
+                this.removeAll();
+                this.revalidate();
+                this.repaint();
+                this.updateUI();
+                try {
+                    this.add(new Panel_vibor_rejs());
+                } catch (SQLException ex) {
+                    Logger.getLogger(Panel_begin.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+        );
 
         gui(strana, url, user, password);
 
@@ -128,10 +150,10 @@ public class Panel_begin extends JPanel {
         ArrayList<String> gorod_kuda = new ArrayList<>(); //динамический массив
         ArrayList<String> IATA_kuda = new ArrayList<>();
         ArrayList<String> ICAO_kuda = new ArrayList<>();
-        int win_w = screenSize.width / 2 - 190;
+        int win_w = screenSize.width / 2 - 210;
         int win_h = screenSize.height / 3 - 180;
         int w = 200;
-        int w_field = 220;
+        int w_field = 200;
         int h = 30;
         //Взрослый
 
@@ -140,12 +162,30 @@ public class Panel_begin extends JPanel {
         jSpinner_1.setSize(w_field, h);
         jSpinner_1.setLocation(win_w + w, win_h);
 
+        ChangeListener listener = new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                JSpinner js = (JSpinner) e.getSource();
+                //System.out.println("Взрослый: " + js.getValue());
+                adult = (int) js.getValue();
+            }
+
+        };
+        jSpinner_1.addChangeListener(listener);
+
         //Ребенок
         jLabel1.setSize(w, h);
         jLabel1.setLocation(win_w, win_h + 30);
         jSpinner1.setSize(w_field, h);
-
         jSpinner1.setLocation(win_w + w, win_h + 30);
+        ChangeListener listener1 = new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                JSpinner js = (JSpinner) e.getSource();
+                child = (int) js.getValue();
+                //System.out.println("Ребенок: " + js.getValue());
+
+            }
+        };
+        jSpinner1.addChangeListener(listener1);
 
         //Младенец
         jLabel10.setSize(w, h);
@@ -153,18 +193,30 @@ public class Panel_begin extends JPanel {
         jSpinner_mld.setSize(w_field, h);
         jSpinner_mld.setLocation(win_w + w, win_h + 60);
 
+        ChangeListener listener2 = new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                JSpinner js = (JSpinner) e.getSource();
+                baby = (int) js.getValue();
+            }
+        };
+        jSpinner_mld.addChangeListener(listener2);
+
         //Откуда
         jLabel2.setSize(w, h);
         jLabel2.setLocation(win_w, win_h + 90);
         ComBox_otk(strana, url, user, password, gorod, IATA, ICAO);
         jComboBox_otk_strana.setSize(w, h);
         jComboBox_otk_strana.setLocation(win_w, win_h + 120);
-        jComboBox_otk_gorod.setSize(w_field, h);
+        jComboBox_otk_strana.setSelectedIndex(161);
+        jComboBox_otk_gorod.setSize(260, h);
         jComboBox_otk_gorod.setLocation(win_w + w, win_h + 120);
-        jComboBox_otk_gorod.addActionListener(new ActionListener() {
 
+        //выбираем первый без нажатия
+        otk_gorod = (String) jComboBox_otk_gorod.getSelectedItem();
+
+        //выбираем после нажатия
+        jComboBox_otk_gorod.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                gorod_begin = jComboBox_otk_gorod.getSelectedIndex();
                 otk_gorod = (String) jComboBox_otk_gorod.getSelectedItem();
 
             }
@@ -176,8 +228,13 @@ public class Panel_begin extends JPanel {
         Combox_kuda(strana, url, user, password, gorod_kuda, IATA_kuda, ICAO_kuda, gorod, IATA, ICAO);
         jComboBox_kuda_strana.setSize(w, h);
         jComboBox_kuda_strana.setLocation(win_w, win_h + 180);
-        jComboBox_kuda_gorod.setSize(w_field, h);
+        jComboBox_kuda_gorod.setSize(260, h);
         jComboBox_kuda_gorod.setLocation(win_w + w, win_h + 180);
+
+        //выбираем первый без нажатия
+        kuda_gorod = (String) jComboBox_kuda_gorod.getSelectedItem();
+
+        //выбираем после нажатия
         jComboBox_kuda_gorod.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
@@ -187,21 +244,22 @@ public class Panel_begin extends JPanel {
         });
 
         //Класс обслуживания
+        /* 
         jLabel4.setSize(w, h);
         jLabel4.setLocation(win_w, win_h + 210);
         jComboBox_klass_obsl.setSize(w_field, h);
         jComboBox_klass_obsl.setLocation(win_w + w, win_h + 210);
         jComboBox_klass_obsl.addItem("Эконом");
-        jComboBox_klass_obsl.addItem("Комфорт");
-        jComboBox_klass_obsl.addItem("Люкс");
-
+        jComboBox_klass_obsl.addItem("Бизнес");
+        jComboBox_klass_obsl.addItem("Первый");
+         */
         //Кнопки
         //Отмена
         jButton1.setSize(w, h);
-        jButton1.setLocation(win_w, win_h + 290);
+        jButton1.setLocation(win_w, win_h + 220);
         //Добавить
         jButton2.setSize(w_field, h);
-        jButton2.setLocation(win_w + w, win_h + 290);
+        jButton2.setLocation(win_w + w, win_h + 220);
 
         this.add(jLabel8);
         this.add(jSpinner_1);
@@ -219,10 +277,10 @@ public class Panel_begin extends JPanel {
         this.add(jLabel3);
         this.add(jComboBox_kuda_strana);
         this.add(jComboBox_kuda_gorod);
-
+        /*
         this.add(jLabel4);
         this.add(jComboBox_klass_obsl);
-
+         */
         this.add(jButton1);
         this.add(jButton2);
     }
@@ -231,6 +289,7 @@ public class Panel_begin extends JPanel {
         for (int i = 0; i < strana.length; i++) {
             jComboBox_otk_strana.addItem(strana[i]);
         }
+
         jComboBox_otk_strana.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
@@ -272,12 +331,12 @@ public class Panel_begin extends JPanel {
 
                 for (int i = 0; i < gorod.size(); i++) {
 
-                    //jComboBox_otk_gorod.addItem(gorod.get(i) + " (" + IATA.get(i) + "," + ICAO.get(i) + ")");
+                    //jComboBox_otk_gorod.addItem(gorod.get(i) + " (" + IATA.get(i) + ", " + ICAO.get(i) + ")");
                     jComboBox_otk_gorod.addItem(gorod.get(i));
                 }
                 gorod.removeAll(gorod);
-                IATA.removeAll(IATA);
-                ICAO.removeAll(ICAO);
+                //IATA.removeAll(IATA);
+                //ICAO.removeAll(ICAO);
             }
         }
         );
@@ -326,12 +385,12 @@ public class Panel_begin extends JPanel {
                     e.printStackTrace();
                 }
                 for (int i = 0; i < gorod_kuda.size(); i++) {
-                    //jComboBox_kuda_gorod.addItem(gorod_kuda.get(i) + " (" + IATA_kuda.get(i) + "," + ICAO_kuda.get(i) + ")");
+                    //jComboBox_kuda_gorod.addItem(gorod_kuda.get(i) + " (" + IATA_kuda.get(i) + ", " + ICAO_kuda.get(i) + ")");
                     jComboBox_kuda_gorod.addItem(gorod_kuda.get(i));
                 }
                 gorod_kuda.removeAll(gorod);
-                IATA_kuda.removeAll(IATA);
-                ICAO_kuda.removeAll(ICAO);
+                //IATA_kuda.removeAll(IATA);
+                //ICAO_kuda.removeAll(ICAO);
 
             }
         }
@@ -339,6 +398,7 @@ public class Panel_begin extends JPanel {
     }
 
     public void insert_gorods(String url, String user, String password) {
+
         try (Connection c = DriverManager.getConnection(url, user, password)) {
             c.setAutoCommit(false);
             c.setReadOnly(false);
@@ -357,4 +417,26 @@ public class Panel_begin extends JPanel {
             e.printStackTrace();
         }
     }
+
+    public void insert_vid_bileta(String url, String user, String password) {
+
+        try (Connection c = DriverManager.getConnection(url, user, password)) {
+            c.setAutoCommit(false);
+            c.setReadOnly(false);
+            try (PreparedStatement ps2 = c.prepareStatement("UPDATE `mydb`.`rejs_gorod` SET `Adult` = ?, `Child` = ?, `Baby` = ? WHERE `rejs_gorod`.`id` = 1;")) {
+                ps2.setInt(1, adult);
+                ps2.setInt(2, child);
+                ps2.setInt(3, baby);
+                ps2.executeUpdate();
+            }
+            c.commit();
+            c.commit();
+            c.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

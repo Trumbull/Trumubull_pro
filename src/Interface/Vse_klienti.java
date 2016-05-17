@@ -150,7 +150,6 @@ public class Vse_klienti extends javax.swing.JFrame {
                 model.setValueAt(data_rog[i], i, 3);
                 model.setValueAt(mili[i], i, 4);
                 model.setValueAt(codes.get(id_flag[i]), i, 5);
-
             }
 
             c.commit();
