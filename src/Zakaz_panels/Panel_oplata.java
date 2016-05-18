@@ -1,7 +1,7 @@
 package Zakaz_panels;
 
 import Connect.Conn;
-import Interface.table;
+import Interface.Info_zakaz;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;

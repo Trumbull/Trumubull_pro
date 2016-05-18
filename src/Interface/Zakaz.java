@@ -10,6 +10,7 @@ import Zakaz_panels.Panel_begin;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +23,7 @@ public class Zakaz extends javax.swing.JFrame {
     /**
      * Creates new form Test_zakaz
      */
-    public Zakaz() throws SQLException {
+    public Zakaz() throws SQLException, ParseException {
         initComponents();
         getContentPane().add(new Panel_begin(), new FlowLayout().CENTER, 0);
     }
@@ -37,6 +38,7 @@ public class Zakaz extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Заказ");
         setExtendedState(MAXIMIZED_BOTH);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -88,6 +90,8 @@ public class Zakaz extends javax.swing.JFrame {
                 try {
                     new Zakaz().setVisible(true);
                 } catch (SQLException ex) {
+                    Logger.getLogger(Zakaz.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
                     Logger.getLogger(Zakaz.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

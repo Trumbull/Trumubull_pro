@@ -39,19 +39,21 @@ public class Panel_zakaz_element extends JPanel {
     JTextField email_field;
     JButton insert_klient;
     JButton cancel_klient;
-    Zakaz_p rejs_p = new Zakaz_p();
-
-    int adult = rejs_p.getAdult();
-    int child = rejs_p.getChild();
-    int baby = rejs_p.getBaby();
-    int cena_rows_begin = 0;
-    String nomer_rejs = rejs_p.getNomer_rejs();
-    String kolich_mili = rejs_p.getKolich_mil();
-    int id_marshrut = rejs_p.getID_marshrut();
-    int flag = 0;
-    int multiplier[] = new int[3];
-    int cena_rows[] = new int[3];
-    int nakop_mili = 0;
+    private Zakaz_p rejs_p = new Zakaz_p();
+    private int mest_ekonom = rejs_p.getMest_ekonom();
+    private int mest_bizness = rejs_p.getMest_bizness();
+    private int mest_pervyj = rejs_p.getMest_pervyj();
+    private int adult = rejs_p.getAdult();
+    private int child = rejs_p.getChild();
+    private int baby = rejs_p.getBaby();
+    private int cena_rows_begin = 0;
+    private String nomer_rejs = rejs_p.getNomer_rejs();
+    private String kolich_mili = rejs_p.getKolich_mil();
+    private int id_marshrut = rejs_p.getID_marshrut();
+    private int flag = 0;
+    private int multiplier[] = new int[3];
+    private int cena_rows[] = new int[3];
+    private int nakop_mili = 0;
 
     public Panel_zakaz_element() {
         this.setBounds(0, 0, screenSize.width, screenSize.height);
@@ -87,6 +89,18 @@ public class Panel_zakaz_element extends JPanel {
                         adult = rs.getInt("Adult");
                         child = rs.getInt("Child");
                         baby = rs.getInt("Baby");
+
+                    }
+                }
+                ps.close();
+            }
+            try (PreparedStatement ps = c.prepareStatement("SELECT  * FROM `rejs` WHERE `Nomer`=?")) {
+                ps.setString(1, nomer_rejs);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        mest_ekonom = rs.getInt("Mest_ekonom");
+                        mest_bizness = rs.getInt("Mest_bizness");
+                        mest_pervyj = rs.getInt("Mest_pervyj");
 
                     }
                 }
@@ -147,9 +161,15 @@ public class Panel_zakaz_element extends JPanel {
 
         klass_obsl_label.setSize(w, h);
         klass_obsl_label.setLocation(win_w, win_h + h * 2);
-        klass_obsl_combox.addItem("Эконом");
-        klass_obsl_combox.addItem("Бизнес");
-        klass_obsl_combox.addItem("Первый");
+        if (mest_ekonom != 0) {
+            klass_obsl_combox.addItem("Эконом");
+        }
+        if (mest_bizness != 0) {
+            klass_obsl_combox.addItem("Бизнес");
+        }
+        if (mest_pervyj != 0) {
+            klass_obsl_combox.addItem("Первый");
+        }
         klass_obsl_combox.setSize(w_field, h);
         klass_obsl_combox.setLocation(win_w + 170, win_h + h * 2);
         klass_obsl_combox.setSelectedIndex(0);

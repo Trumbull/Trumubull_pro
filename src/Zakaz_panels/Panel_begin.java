@@ -10,11 +10,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -22,6 +25,7 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.MaskFormatter;
 
 //Добавить Заказ
 public class Panel_begin extends JPanel {
@@ -40,6 +44,8 @@ public class Panel_begin extends JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private JLabel datу_label;
+    private JFormattedTextField date_rog_formatted_field;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner_1;
     private javax.swing.JSpinner jSpinner_mld;
@@ -50,12 +56,14 @@ public class Panel_begin extends JPanel {
     private javax.swing.JComboBox<String> jComboBox_kuda_strana;
     private String otk_gorod;
     private String kuda_gorod;
+    private Zakaz_p p = new Zakaz_p();
+    private String date_sql = p.getDate_sql();
     private int adult;
     private int child;
     private int baby;
     int gorod_begin = 0;
 
-    public Panel_begin() throws SQLException {
+    public Panel_begin() throws SQLException, ParseException {
         String strana[] = new String[239];
         setBounds(0, 0, screenSize.width, screenSize.height);
         jLabel1 = new javax.swing.JLabel();
@@ -70,6 +78,7 @@ public class Panel_begin extends JPanel {
         jComboBox_klass_obsl = new javax.swing.JComboBox<>();
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
+        datу_label = new JLabel();
         jSpinner_mld = new javax.swing.JSpinner();
         jLabel9 = new javax.swing.JLabel();
         jComboBox_otk_gorod = new JComboBox();
@@ -87,6 +96,7 @@ public class Panel_begin extends JPanel {
         jLabel3.setText("Куда");
         jLabel4.setText("Класс Обслуживания");
         jLabel5.setText("Класс обслуживания");
+        datу_label.setText("Дата отправления");
         jButton1.setText("Отмена");
         jButton2.setText("Далее");
         Conn conn = new Conn();
@@ -116,11 +126,13 @@ public class Panel_begin extends JPanel {
         }
 
         jButton2.addActionListener((ActionEvent e) -> {
+            String data = date_rog_formatted_field.getText();
+            date_sql_formatted(data);
             if (otk_gorod == null || kuda_gorod == null || adult == 0) {
                 JOptionPane.showMessageDialog(this,
                         "Ошибка неполные данные!");
             } else {
-                System.out.println("Взрослый: " + adult);
+
                 insert_gorods(url, user, password);
                 insert_vid_bileta(url, user, password);
                 this.removeAll();
@@ -141,7 +153,17 @@ public class Panel_begin extends JPanel {
 
     }
 
-    public void gui(String[] strana, String url, String user, String password) {
+    public void date_sql_formatted(String data) {
+        String year;
+        String month;
+        String date;
+        year = "" + data.charAt(6) + data.charAt(7) + data.charAt(8) + data.charAt(9);
+        month = "" + data.charAt(3) + data.charAt(4);
+        date = "" + data.charAt(0) + data.charAt(1);
+        date_sql = year + "-" + month + "-" + date;
+    }
+
+    public void gui(String[] strana, String url, String user, String password) throws ParseException {
         this.setLayout(null);
         ArrayList<String> gorod = new ArrayList<>(); //динамический массив
         ArrayList<String> IATA = new ArrayList<>();
@@ -253,13 +275,23 @@ public class Panel_begin extends JPanel {
         jComboBox_klass_obsl.addItem("Бизнес");
         jComboBox_klass_obsl.addItem("Первый");
          */
+        datу_label.setSize(w, h);
+        datу_label.setLocation(win_w, win_h + 210);
+
+        MaskFormatter mf = new MaskFormatter("##-##-####");
+        date_rog_formatted_field = new JFormattedTextField(mf);
+        mf.setPlaceholderCharacter('_');
+
+        date_rog_formatted_field.setSize(80, h);
+        date_rog_formatted_field.setLocation(win_w + w, win_h + 210);
+        date_rog_formatted_field.setHorizontalAlignment(JFormattedTextField.RIGHT);
         //Кнопки
         //Отмена
         jButton1.setSize(w, h);
-        jButton1.setLocation(win_w, win_h + 220);
+        jButton1.setLocation(win_w, win_h + 240);
         //Добавить
         jButton2.setSize(w_field, h);
-        jButton2.setLocation(win_w + w, win_h + 220);
+        jButton2.setLocation(win_w + w, win_h + 240);
 
         this.add(jLabel8);
         this.add(jSpinner_1);
@@ -281,6 +313,9 @@ public class Panel_begin extends JPanel {
         this.add(jLabel4);
         this.add(jComboBox_klass_obsl);
          */
+        this.add(datу_label);
+        this.add(date_rog_formatted_field);
+
         this.add(jButton1);
         this.add(jButton2);
     }
@@ -402,10 +437,11 @@ public class Panel_begin extends JPanel {
         try (Connection c = DriverManager.getConnection(url, user, password)) {
             c.setAutoCommit(false);
             c.setReadOnly(false);
-            try (PreparedStatement ps2 = c.prepareStatement("UPDATE `rejs_gorod` SET `Gorod_otk`=?, `Gorod_kuda`=?  WHERE id=?")) {
+            try (PreparedStatement ps2 = c.prepareStatement("UPDATE `rejs_gorod` SET `Gorod_otk`=?, `Gorod_kuda`=?, `Daty`=?  WHERE id=?")) {
                 ps2.setString(1, otk_gorod);
                 ps2.setString(2, kuda_gorod);
-                ps2.setInt(3, 1);
+                ps2.setString(3, date_sql);
+                ps2.setInt(4, 1);
                 ps2.executeUpdate();
             }
             c.commit();

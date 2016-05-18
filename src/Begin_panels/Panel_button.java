@@ -2,13 +2,14 @@ package Begin_panels;
 
 import Interface.Vse_klienti;
 import Interface.Zakaz;
-import Interface.table;
+import Interface.Info_zakaz;
 import Zakaz_panels.Panel_zakaz_element;
 import Zakaz_panels.Panel_vibor_klienta;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -54,6 +55,8 @@ public class Panel_button extends JPanel {
                 b1ActionPerformed();
             } catch (SQLException ex) {
                 Logger.getLogger(Panel_button.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(Panel_button.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         b2.addActionListener((java.awt.event.ActionEvent evt) -> {
@@ -69,16 +72,12 @@ public class Panel_button extends JPanel {
 
     }
 
-    private void b1ActionPerformed() throws SQLException {
+    private void b1ActionPerformed() throws SQLException, ParseException {
         new Zakaz().setVisible(true);
     }
 
     private void b2ActionPerformed() {
-        this.removeAll();
-        this.revalidate();
-        this.repaint();
-        this.updateUI();
-        new table().setVisible(true);
+        new Info_zakaz().setVisible(true);
     }
 
     private void b3ActionPerformed() throws SQLException {

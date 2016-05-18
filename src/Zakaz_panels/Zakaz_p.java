@@ -22,7 +22,7 @@ public class Zakaz_p {
     private String lastname;
     private String мiddle_name;
     private int id_country;
-    private String passport_num; 
+    private String passport_num;
     private String city;
     private String street;
     private String house;
@@ -35,6 +35,9 @@ public class Zakaz_p {
     private int cena;
     private int element_id;
     private int mili;
+    private int mest_ekonom;
+    private int mest_bizness;
+    private int mest_pervyj;
 
     public Zakaz_p() {
 
@@ -256,5 +259,26 @@ public class Zakaz_p {
      */
     public int getMili() {
         return mili;
+    }
+
+    /**
+     * @return the mest_ekonom
+     */
+    public int getMest_ekonom() {
+        return mest_ekonom;
+    }
+
+    /**
+     * @return the mest_bizness
+     */
+    public int getMest_bizness() {
+        return mest_bizness;
+    }
+
+    /**
+     * @return the mest_pervyj
+     */
+    public int getMest_pervyj() {
+        return mest_pervyj;
     }
 }

@@ -8,19 +8,20 @@ package Interface;
 import Zakaz_panels.Panel_oplata;
 import Zakaz_panels.Panel_vibor_klienta;
 import Zakaz_panels.Panel_zakaz_end;
+import Zakaz_panels.Panel_zakaz_table;
 
 /**
  *
  * @author 10i
  */
-public class table extends javax.swing.JFrame {
+public class Info_zakaz extends javax.swing.JFrame {
 
     /**
      * Creates new form table
      */
-    public table() {
-        //getContentPane().add(new Panel_vibor_klienta());
-        getContentPane().add(new Panel_oplata());
+    public Info_zakaz() {
+        getContentPane().add(new Panel_zakaz_table());
+        //getContentPane().add(new Panel_oplata());
         initComponents();
     }
 
@@ -33,7 +34,9 @@ public class table extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Информация о заказах");
+        setExtendedState(MAXIMIZED_BOTH);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,20 +69,21 @@ public class table extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(table.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Info_zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(table.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Info_zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(table.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Info_zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(table.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Info_zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new table().setVisible(true);
+                new Info_zakaz().setVisible(true);
             }
         });
     }

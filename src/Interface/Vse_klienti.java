@@ -5,6 +5,7 @@
  */
 package Interface;
 
+import Connect.Conn;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
@@ -37,7 +38,10 @@ public class Vse_klienti extends javax.swing.JFrame {
 
     public Vse_klienti() throws SQLException {
         Map<Integer, String> codes = new HashMap<>();
-        String url = "jdbc:mysql://localhost:3306/mydb", user = "root", password = "";
+        Conn conn = new Conn();
+        String url = conn.getUrl();
+        String user = conn.getUser();
+        String password = conn.getPassword();
         try (Connection c = DriverManager.getConnection(url, user, password)) {
             c.setAutoCommit(false);
             c.setReadOnly(false);
@@ -174,11 +178,11 @@ public class Vse_klienti extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Информация о клиентах");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setExtendedState(MAXIMIZED_BOTH
         );
         setLocationByPlatform(true);
-        setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);

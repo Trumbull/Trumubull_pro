@@ -254,7 +254,7 @@ public class Panel_zakaz_end extends JPanel {
         vid_bileta_box.setSelectedIndex(0);
         cena_rows[0] = cena;;
         price_field.setText("" + cena_rows[0]);
-        cena_rows[0] = 0;
+        //cena_rows[0] = 0;
         vid_bileta = 0;
         vid_bileta_box.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -263,14 +263,14 @@ public class Panel_zakaz_end extends JPanel {
                     //Обычный
                     cena_rows[0] = cena;
                     price_field.setText("" + cena_rows[0]);
-                    cena_rows[0] = 0;
+                    //cena_rows[0] = 0;
                     vid_bileta = 0;
                 }
                 if (flag == 1) {
 //Бизнес
                     cena_rows[1] = cena - ((cena / 100) * 20);
                     price_field.setText("" + cena_rows[1]);
-                    cena_rows[1] = 0;
+                    //cena_rows[1] = 0;
                     vid_bileta = 0;
 // mili_field.setText(String.format("%8.2f", nakop_mili).replace(',', '.'));
                 }
@@ -1063,6 +1063,44 @@ public class Panel_zakaz_end extends JPanel {
                 ps.setInt(2, adult_id[0]);
                 ps.executeUpdate();
                 ps.close();
+            }
+            int mest_ekonom = 0;
+            int mest_bizness = 0;
+            int mest_pervyj = 0;
+
+            try (PreparedStatement ps = c.prepareStatement("SELECT  * FROM `rejs` WHERE `Nomer`=?")) {
+                ps.setString(1, nomer_rejs);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        mest_ekonom = rs.getInt("Mest_ekonom");
+                        mest_bizness = rs.getInt("Mest_bizness");
+                        mest_pervyj = rs.getInt("Mest_pervyj");
+
+                    }
+                }
+                ps.close();
+            }
+            int vse = adult + child + baby;
+            switch (klass_obsluzhivanija_id) {
+                case 1:
+                    mest_ekonom = mest_ekonom - vse;
+                    break;
+
+                case 2:
+                    mest_bizness = mest_bizness - vse;
+                    break;
+
+                case 3:
+                    mest_pervyj = mest_pervyj - vse;
+                    break;
+            }
+
+            try (PreparedStatement ps2 = c.prepareStatement("UPDATE `rejs` SET `Mest_ekonom`=?, `Mest_bizness`=?, `Mest_pervyj`=?  WHERE `Nomer`=?")) {
+                ps2.setInt(1, mest_ekonom);
+                ps2.setInt(2, mest_bizness);
+                ps2.setInt(3, mest_pervyj);
+                ps2.setString(4, nomer_rejs);
+                ps2.executeUpdate();
             }
 
             c.commit();

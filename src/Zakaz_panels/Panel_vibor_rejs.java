@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -57,11 +59,15 @@ public class Panel_vibor_rejs extends JPanel {
         ArrayList<String> time_fly = new ArrayList<>();
         ArrayList<String> rejs_nomer = new ArrayList<>();
         ArrayList<Integer> cena = new ArrayList<>();
+        ArrayList<Integer> mest_ekonom = new ArrayList<>();
+        ArrayList<Integer> mest_bizness = new ArrayList<>();
+        ArrayList<Integer> mest_pervyj = new ArrayList<>();
         int cena_rows[] = new int[3];
         int multiplier[] = new int[3]; //множитель
         Zakaz_p rejs_p = new Zakaz_p();
         String ajeroport_otk = rejs_p.getAjeroport_otk();
         String ajeroport_kuda = rejs_p.getAjeroport_kuda();
+        String date_sql = rejs_p.getDate_sql();
         /*
         String ICAO_otk = rejs_p.getICAO_otk();
         String ICAO_kuda = rejs_p.getICAO_kuda();
@@ -94,6 +100,7 @@ public class Panel_vibor_rejs extends JPanel {
                         adult = rs.getInt("Adult");
                         child = rs.getInt("Child");
                         baby = rs.getInt("Baby");
+                        date_sql = rs.getString("Daty");
 
                     }
                 }
@@ -139,8 +146,9 @@ public class Panel_vibor_rejs extends JPanel {
                 ps.close();
             }
             System.out.println(id_marshrut);
-            try (PreparedStatement ps = c.prepareStatement("SELECT * FROM `rejs` WHERE Marshrut_id=?")) {
+            try (PreparedStatement ps = c.prepareStatement("SELECT * FROM `rejs` WHERE Marshrut_id=? AND Data_vsleta=?")) {
                 ps.setInt(1, id_marshrut);
+                ps.setString(2, date_sql);
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
 
@@ -153,6 +161,10 @@ public class Panel_vibor_rejs extends JPanel {
 
                         rejs_nomer.add(rs.getString("Nomer"));
                         cena.add(rs.getInt("Cena"));
+
+                        mest_ekonom.add(rs.getInt("Mest_ekonom"));
+                        mest_bizness.add(rs.getInt("Mest_bizness"));
+                        mest_pervyj.add(rs.getInt("Mest_pervyj"));
                         id++;
                     }
                 }
@@ -312,12 +324,17 @@ public class Panel_vibor_rejs extends JPanel {
         table.setSelectionModel(listSelectionModel);
 
         b1.addActionListener((ActionEvent e) -> {
-            insert_vibor(url, user, password, cena, rejs_nomer);
-            this.removeAll();
-            this.revalidate();
-            this.repaint();
-            this.updateUI();
-            this.add(new Panel_zakaz_element());
+            if (mest_ekonom.get(id_row) == 0 && mest_bizness.get(id_row) == 0 && mest_pervyj.get(id_row) == 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Нет мест!");
+            } else {
+                insert_vibor(url, user, password, cena, rejs_nomer);
+                this.removeAll();
+                this.revalidate();
+                this.repaint();
+                this.updateUI();
+                this.add(new Panel_zakaz_element());
+            }
 
         });
 
@@ -330,6 +347,8 @@ public class Panel_vibor_rejs extends JPanel {
             try {
                 this.add(new Panel_begin());
             } catch (SQLException ex) {
+                Logger.getLogger(Panel_vibor_rejs.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
                 Logger.getLogger(Panel_vibor_rejs.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
