@@ -121,7 +121,7 @@ public class Panel_vibor_klienta extends JPanel {
 
 //Скролл
         JScrollPane scrollPane = new JScrollPane();
-        int h = screenSize.height / 2 + 340; //высота скролла
+        int h = screenSize.height / 2 + 220; //высота скролла
         scrollPane.setBounds(0, 0, screenSize.width, h - 30);
         this.setBounds(0, 0, screenSize.width, screenSize.height);
         this.setLayout(null);

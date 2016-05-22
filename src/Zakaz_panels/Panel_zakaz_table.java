@@ -33,6 +33,9 @@ public class Panel_zakaz_table extends JPanel {
         ArrayList<Integer> klient_id = new ArrayList<>();
         ArrayList<Integer> kolichestvo = new ArrayList<>();
         ArrayList<Integer> cena = new ArrayList<>();
+        ArrayList<String> klient_F = new ArrayList<>();
+        ArrayList<String> klient_I = new ArrayList<>();
+        ArrayList<String> klient_O = new ArrayList<>();
         ArrayList<String> nomer_rejs = new ArrayList<>();
         try (Connection c = DriverManager.getConnection(url, user, password)) {
             c.setAutoCommit(false);
@@ -50,7 +53,30 @@ public class Panel_zakaz_table extends JPanel {
                 }
                 ps.close();
             }
-
+            for (int i = 0; i < element_zakaza_id.size(); i++) {
+                try (PreparedStatement ps = c.prepareStatement("SELECT * FROM `klient_zakaz` WHERE `Element_zakaza_id`=?")) {
+                    ps.setInt(1, element_zakaza_id.get(i));
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            klient_id.add(rs.getInt("Klient_id"));
+                        }
+                    }
+                    ps.close();
+                }
+            }
+            for (int i = 0; i < klient_id.size(); i++) {
+                try (PreparedStatement ps = c.prepareStatement("SELECT * FROM `klient` WHERE `Klient_id`=?")) {
+                    ps.setInt(1, klient_id.get(i));
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            klient_F.add(rs.getString("Familiya"));
+                            klient_I.add(rs.getString("Imja"));
+                            klient_O.add(rs.getString("Otshestvo"));
+                        }
+                    }
+                    ps.close();
+                }
+            }
             //System.out.println("ID: " + id);
             try (PreparedStatement ps = c.prepareStatement("SELECT  * FROM `rejs`")) {
                 try (ResultSet rs = ps.executeQuery()) {
@@ -93,17 +119,20 @@ public class Panel_zakaz_table extends JPanel {
         model.addColumn("Номер");
         model.addColumn("Номер");
         model.addColumn("Количество клиент");
+        model.addColumn("Главный клиент");
         model.addColumn("Цена");
-
+        
+        table.setRowHeight(60);
         //выравнивание таблицы
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-        DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
-        leftRenderer.setHorizontalAlignment(JLabel.LEFT);
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         table.getColumnModel().getColumn(0).setCellRenderer(rightRenderer);
         table.getColumnModel().getColumn(1).setCellRenderer(rightRenderer);
         table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
-        table.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+        table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        table.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
 
         //размеры столбцов            
         /*
@@ -123,7 +152,8 @@ public class Panel_zakaz_table extends JPanel {
             model.setValueAt(element_zakaza_id.get(i), i, 0);
             model.setValueAt(nomer_rejs.get(i), i, 1);
             model.setValueAt(kolichestvo.get(i), i, 2);
-            model.setValueAt(cena.get(i), i, 3);;
+            model.setValueAt("<html><center>" + klient_F.get(i) + "<br>" + klient_I.get(i) + "<br>" + klient_O.get(i) + "<br></center></html>", i, 3);
+            model.setValueAt(cena.get(i), i, 4);
         }
 
     }
