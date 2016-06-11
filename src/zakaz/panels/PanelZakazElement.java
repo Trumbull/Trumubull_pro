@@ -1,6 +1,6 @@
-package Zakaz_panels;
+package zakaz.panels;
 
-import Connect.Conn;
+import conn.Conn;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Panel_zakaz_element extends JPanel {
+public class PanelZakazElement extends JPanel {
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// определяем размер экрана
     JLabel nomer_label;
@@ -39,7 +39,7 @@ public class Panel_zakaz_element extends JPanel {
     JTextField email_field;
     JButton insert_klient;
     JButton cancel_klient;
-    private Zakaz_p rejs_p = new Zakaz_p();
+    private ZakazP rejs_p = new ZakazP();
     private int mest_ekonom = rejs_p.getMest_ekonom();
     private int mest_bizness = rejs_p.getMest_bizness();
     private int mest_pervyj = rejs_p.getMest_pervyj();
@@ -55,7 +55,7 @@ public class Panel_zakaz_element extends JPanel {
     private int cena_rows[] = new int[3];
     private int nakop_mili = 0;
 
-    public Panel_zakaz_element() {
+    public PanelZakazElement() {
         this.setBounds(0, 0, screenSize.width, screenSize.height);
         nomer_label = new JLabel("Номер рейса");
         kolichestvo_label = new JLabel("Количество");
@@ -251,9 +251,9 @@ public class Panel_zakaz_element extends JPanel {
             this.repaint();
             this.updateUI();
             try {
-                this.add(new Panel_vibor_rejs());
+                this.add(new PanelViborRejs());
             } catch (SQLException ex) {
-                Logger.getLogger(Panel_klient_new.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PanelKlientNew.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         insert_klient.addActionListener((ActionEvent e) -> {
@@ -262,7 +262,7 @@ public class Panel_zakaz_element extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_zakaz_end());
+            this.add(new PanelZakazEnd());
         });
     }
 

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Interface;
+package frame;
 
-import Begin_panels.Panel_button;
+import begin.panels.PanelButton;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
@@ -13,10 +13,6 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JButton;
-
 /**
  *
  * @author 10i
@@ -33,7 +29,7 @@ public class Begin extends javax.swing.JFrame {
     public Begin() {
         initComponents();
        // getContentPane().add(new Panel_button(), new FlowLayout().CENTER, 0);
-        getContentPane().add(new Panel_button());
+        getContentPane().add(new PanelButton());
     }
 
     /**

@@ -1,6 +1,6 @@
-package Zakaz_panels;
+package zakaz.panels;
 
-import Connect.Conn;
+import conn.Conn;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -20,11 +20,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
-public class Panel_klient_new extends JPanel {
+public class PanelKlientNew extends JPanel {
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// определяем размер экрана
 
-    private Zakaz_p p = new Zakaz_p();
+    private ZakazP p = new ZakazP();
     private String name = p.getName();
     private String last_name = p.getLastname();
     private String мiddle_name = p.getМiddle_name();
@@ -39,7 +39,7 @@ public class Panel_klient_new extends JPanel {
     private String date_sql = p.getDate_sql();
     private int id = p.getId();
 
-    public Panel_klient_new() throws SQLException, ParseException {
+    public PanelKlientNew() throws SQLException, ParseException {
         JLabel name_label;
         JLabel last_name_label;
         JLabel мiddle_name_label;
@@ -245,7 +245,7 @@ public class Panel_klient_new extends JPanel {
                     this.revalidate();
                     this.repaint();
                     this.updateUI();
-                    this.add(new Panel_vibor_klienta());
+                    this.add(new PanelViborKlienta());
                 });
         insert_klient.addActionListener((ActionEvent e) -> {
 
@@ -267,7 +267,7 @@ public class Panel_klient_new extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_vibor_klienta());
+            this.add(new PanelViborKlienta());
             /*
             System.out.println(date_sql);
             System.out.println(name);

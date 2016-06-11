@@ -3,26 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Interface;
+package frame;
 
-import Zakaz_panels.Panel_oplata;
-import Zakaz_panels.Panel_vibor_klienta;
-import Zakaz_panels.Panel_zakaz_end;
-import Zakaz_panels.Panel_zakaz_table;
+import zakaz.panels.PanelViborRejs;
+import zakaz.panels.PanelBegin;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author 10i
  */
-public class Info_zakaz extends javax.swing.JFrame {
+public class Zakaz extends javax.swing.JFrame {
 
     /**
-     * Creates new form table
+     * Creates new form Test_zakaz
      */
-    public Info_zakaz() {
-        getContentPane().add(new Panel_zakaz_table());
-        //getContentPane().add(new Panel_oplata());
+    public Zakaz() throws SQLException, ParseException {
         initComponents();
+        getContentPane().add(new PanelBegin(), new FlowLayout().CENTER, 0);
     }
 
     /**
@@ -35,7 +38,7 @@ public class Info_zakaz extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Информация о заказах");
+        setTitle("Заказ");
         setExtendedState(MAXIMIZED_BOTH);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -46,10 +49,11 @@ public class Info_zakaz extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 340, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -69,13 +73,13 @@ public class Info_zakaz extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Info_zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Info_zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Info_zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Info_zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Zakaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -83,7 +87,13 @@ public class Info_zakaz extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Info_zakaz().setVisible(true);
+                try {
+                    new Zakaz().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Zakaz.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Zakaz.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

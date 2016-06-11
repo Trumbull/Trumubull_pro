@@ -1,14 +1,9 @@
-package Zakaz_panels;
+package zakaz.panels;
 
-import Connect.Conn;
-import Interface.Zakaz;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
+import conn.Conn;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,31 +11,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.StyledDocument;
 
 //Таблица с клиентами и кнопками 
-public class Panel_vibor_rejs extends JPanel {
+public class PanelViborRejs extends JPanel {
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// определяем размер экрана
     private javax.swing.JLabel jLabel1;
@@ -49,8 +35,8 @@ public class Panel_vibor_rejs extends JPanel {
     int id_marshrut = 0;
     int id_rejs = 0;
 
-    public Panel_vibor_rejs() throws SQLException {
-        JButton b1 = new JButton("Далее");;
+    public PanelViborRejs() throws SQLException {
+        JButton b1 = new JButton("Далее");
         JButton b2 = new JButton("Назад");
         ArrayList<String> data_otk = new ArrayList<>();
         ArrayList<String> time_otk = new ArrayList<>();
@@ -64,7 +50,7 @@ public class Panel_vibor_rejs extends JPanel {
         ArrayList<Integer> mest_pervyj = new ArrayList<>();
         int cena_rows[] = new int[3];
         int multiplier[] = new int[3]; //множитель
-        Zakaz_p rejs_p = new Zakaz_p();
+        ZakazP rejs_p = new ZakazP();
         String ajeroport_otk = rejs_p.getAjeroport_otk();
         String ajeroport_kuda = rejs_p.getAjeroport_kuda();
         String date_sql = rejs_p.getDate_sql();
@@ -333,7 +319,7 @@ public class Panel_vibor_rejs extends JPanel {
                 this.revalidate();
                 this.repaint();
                 this.updateUI();
-                this.add(new Panel_zakaz_element());
+                this.add(new PanelZakazElement());
             }
 
         });
@@ -345,11 +331,11 @@ public class Panel_vibor_rejs extends JPanel {
             this.repaint();
             this.updateUI();
             try {
-                this.add(new Panel_begin());
+                this.add(new PanelBegin());
             } catch (SQLException ex) {
-                Logger.getLogger(Panel_vibor_rejs.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PanelViborRejs.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ParseException ex) {
-                Logger.getLogger(Panel_vibor_rejs.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PanelViborRejs.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
 

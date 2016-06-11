@@ -1,6 +1,6 @@
-package Zakaz_panels;
+package zakaz.panels;
 
-import Connect.Conn;
+import conn.Conn;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -18,11 +18,11 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-public class Panel_zakaz_table extends JPanel {
+public class PanelZakazTable extends JPanel {
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// определяем размер экрана
 
-    public Panel_zakaz_table() {
+    public PanelZakazTable() {
         Conn conn = new Conn();
         String url = conn.getUrl();
         String user = conn.getUser();

@@ -1,32 +1,26 @@
-package Begin_panels;
+package begin.panels;
 
-import Interface.Vse_klienti;
-import Interface.Zakaz;
-import Interface.Info_zakaz;
-import Zakaz_panels.Panel_zakaz_element;
-import Zakaz_panels.Panel_vibor_klienta;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import frame.Vse_klienti;
+import frame.Zakaz;
+import frame.Info_zakaz;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import size.windows.SizeWindows;
 
 //Начальная панель
-public class Panel_button extends JPanel {
+public class PanelButton extends JPanel {
 
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// определяем размер экрана
-
-    public Panel_button() {
-
-        this.setBounds(0, 0, screenSize.width, screenSize.height / 2 + 300);
+    public PanelButton() {
+        SizeWindows size = new SizeWindows();
+        this.setBounds(0, 0, size.getW(), size.getH_b());
         //this.setLayout(new BorderLayout());
         this.setLayout(null);
-        int win_w = screenSize.width / 2 - 80;
-        int win_h = screenSize.height / 3 - 180;
+        int win_w = size.getWin_w();
+        int win_h = size.getWin_h();
         int w = 170;
         int h = 30;
         JButton b1 = new JButton();
@@ -53,10 +47,8 @@ public class Panel_button extends JPanel {
         b1.addActionListener((java.awt.event.ActionEvent evt) -> {
             try {
                 b1ActionPerformed();
-            } catch (SQLException ex) {
-                Logger.getLogger(Panel_button.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(Panel_button.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException | ParseException ex) {
+                Logger.getLogger(PanelButton.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         b2.addActionListener((java.awt.event.ActionEvent evt) -> {
@@ -66,7 +58,7 @@ public class Panel_button extends JPanel {
             try {
                 b3ActionPerformed();
             } catch (SQLException ex) {
-                Logger.getLogger(Panel_button.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PanelButton.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
 

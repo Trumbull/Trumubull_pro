@@ -1,6 +1,6 @@
-package Zakaz_panels;
+package zakaz.panels;
 
-public class Zakaz_p {
+public class ZakazP {
 
     private String ajeroport_otk;
     private String ajeroport_kuda;
@@ -38,8 +38,9 @@ public class Zakaz_p {
     private int mest_ekonom;
     private int mest_bizness;
     private int mest_pervyj;
+    private int gorod_begin;
 
-    public Zakaz_p() {
+    public ZakazP() {
 
     }
 
@@ -280,5 +281,19 @@ public class Zakaz_p {
      */
     public int getMest_pervyj() {
         return mest_pervyj;
+    }
+
+    /**
+     * @return the gorod_begin
+     */
+    public int getGorod_begin() {
+        return gorod_begin;
+    }
+
+    /**
+     * @param gorod_begin the gorod_begin to set
+     */
+    public void setGorod_begin(int gorod_begin) {
+        this.gorod_begin = gorod_begin;
     }
 }

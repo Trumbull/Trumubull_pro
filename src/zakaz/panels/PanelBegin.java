@@ -1,10 +1,7 @@
-package Zakaz_panels;
+package zakaz.panels;
 
-import Connect.Conn;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import conn.Conn;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,58 +11,54 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.MaskFormatter;
+import size.windows.SizeWindows;
+import sql.Strana;
 
 //Добавить Заказ
-public class Panel_begin extends JPanel {
+public final class PanelBegin extends JPanel {
 
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox_kuda_gorod;
-    private javax.swing.JComboBox<String> jComboBox_klass_obsl;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private JLabel datу_label;
+    private final javax.swing.JButton jButton1;
+    private final javax.swing.JButton jButton2;
+    private final javax.swing.JComboBox<String> jComboBox_kuda_gorod;
+    private final javax.swing.JLabel jLabel1;
+    private final javax.swing.JLabel jLabel10;
+    private final javax.swing.JLabel jLabel2;
+    private final javax.swing.JLabel jLabel3;
+    private final javax.swing.JLabel jLabel4;
+    private final javax.swing.JLabel jLabel5;
+    private final javax.swing.JLabel jLabel8;
+    private final JLabel datу_label;
     private JFormattedTextField date_rog_formatted_field;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner_1;
-    private javax.swing.JSpinner jSpinner_mld;
-    private javax.swing.JComboBox<String> jComboBox_otk_gorod;
-    private javax.swing.JTextField jTextField9;
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// определяем размер экрана
-    private javax.swing.JComboBox<String> jComboBox_otk_strana;
-    private javax.swing.JComboBox<String> jComboBox_kuda_strana;
+    private final javax.swing.JSpinner jSpinner1;
+    private final javax.swing.JSpinner jSpinner_1;
+    private final javax.swing.JSpinner jSpinner_mld;
+    private final javax.swing.JComboBox<String> jComboBox_otk_gorod;
+    private final javax.swing.JComboBox<String> jComboBox_otk_strana;
+    private final javax.swing.JComboBox<String> jComboBox_kuda_strana;
     private String otk_gorod;
     private String kuda_gorod;
-    private Zakaz_p p = new Zakaz_p();
+    private final ZakazP p = new ZakazP();
     private String date_sql = p.getDate_sql();
     private int adult;
     private int child;
     private int baby;
-    int gorod_begin = 0;
+    int gorod_begin = p.getGorod_begin();
 
-    public Panel_begin() throws SQLException, ParseException {
-        String strana[] = new String[239];
-        setBounds(0, 0, screenSize.width, screenSize.height);
+    public PanelBegin() throws SQLException, ParseException {
+        
+        SizeWindows size_windows =new SizeWindows();
+        Strana str =new Strana();
+        String strana[] = str.getStrana();
+        setBounds(0, 0, size_windows.getW(), size_windows.getH());
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -75,20 +68,14 @@ public class Panel_begin extends JPanel {
         jComboBox_kuda_gorod = new javax.swing.JComboBox<>();
         jSpinner1 = new javax.swing.JSpinner();
         jSpinner_1 = new javax.swing.JSpinner();
-        jComboBox_klass_obsl = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         datу_label = new JLabel();
         jSpinner_mld = new javax.swing.JSpinner();
-        jLabel9 = new javax.swing.JLabel();
         jComboBox_otk_gorod = new JComboBox();
         jComboBox_otk_strana = new JComboBox();
         jComboBox_kuda_strana = new JComboBox();
         jLabel10 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-
-        //jButton1.setBounds(screenSize.width - 68 / 2, (screenSize.height - 68) / 2, 68, 68);
         jLabel8.setText("Взрослый");
         jLabel1.setText("Ребенок");
         jLabel10.setText("Младенец");
@@ -103,27 +90,6 @@ public class Panel_begin extends JPanel {
         String url = conn.getUrl();
         String user = conn.getUser();
         String password = conn.getPassword();
-        try (Connection c = DriverManager.getConnection(url, user, password)) {
-            int i = 0;
-            c.setAutoCommit(false);
-            c.setReadOnly(false);
-            try (PreparedStatement ps = c.prepareStatement("SELECT  * FROM `strana`")) {
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        strana[i] = rs.getString("Nazvanie");
-                        i++;
-                    }
-                }
-                ps.close();
-            }
-            c.commit();
-            c.commit();
-            c.close();
-        } catch (SQLException se) {
-            se.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         jButton2.addActionListener((ActionEvent e) -> {
             String data = date_rog_formatted_field.getText();
@@ -140,16 +106,16 @@ public class Panel_begin extends JPanel {
                 this.repaint();
                 this.updateUI();
                 try {
-                    this.add(new Panel_vibor_rejs());
+                    this.add(new PanelViborRejs());
                 } catch (SQLException ex) {
-                    Logger.getLogger(Panel_begin.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PanelBegin.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
         }
         );
 
-        gui(strana, url, user, password);
+        gui(strana, url, user, password, size_windows);
 
     }
 
@@ -163,7 +129,7 @@ public class Panel_begin extends JPanel {
         date_sql = year + "-" + month + "-" + date;
     }
 
-    public void gui(String[] strana, String url, String user, String password) throws ParseException {
+    public void gui(String[] strana, String url, String user, String password, SizeWindows size_windows) throws ParseException {
         this.setLayout(null);
         ArrayList<String> gorod = new ArrayList<>(); //динамический массив
         ArrayList<String> IATA = new ArrayList<>();
@@ -172,8 +138,8 @@ public class Panel_begin extends JPanel {
         ArrayList<String> gorod_kuda = new ArrayList<>(); //динамический массив
         ArrayList<String> IATA_kuda = new ArrayList<>();
         ArrayList<String> ICAO_kuda = new ArrayList<>();
-        int win_w = screenSize.width / 2 - 210;
-        int win_h = screenSize.height / 3 - 180;
+        int win_w = size_windows.getW() / 2 - 210;
+        int win_h = size_windows.getH()/ 3 - 180;
         int w = 200;
         int w_field = 200;
         int h = 30;
@@ -184,13 +150,10 @@ public class Panel_begin extends JPanel {
         jSpinner_1.setSize(w_field, h);
         jSpinner_1.setLocation(win_w + w, win_h);
 
-        ChangeListener listener = new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                JSpinner js = (JSpinner) e.getSource();
-                //System.out.println("Взрослый: " + js.getValue());
-                adult = (int) js.getValue();
-            }
-
+        ChangeListener listener = (ChangeEvent e) -> {
+            JSpinner js = (JSpinner) e.getSource();
+            //System.out.println("Взрослый: " + js.getValue());
+            adult = (int) js.getValue();
         };
         jSpinner_1.addChangeListener(listener);
 
@@ -199,13 +162,10 @@ public class Panel_begin extends JPanel {
         jLabel1.setLocation(win_w, win_h + 30);
         jSpinner1.setSize(w_field, h);
         jSpinner1.setLocation(win_w + w, win_h + 30);
-        ChangeListener listener1 = new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                JSpinner js = (JSpinner) e.getSource();
-                child = (int) js.getValue();
-                //System.out.println("Ребенок: " + js.getValue());
-
-            }
+        ChangeListener listener1 = (ChangeEvent e) -> {
+            JSpinner js = (JSpinner) e.getSource();
+            child = (int) js.getValue();
+            //System.out.println("Ребенок: " + js.getValue());
         };
         jSpinner1.addChangeListener(listener1);
 
@@ -215,11 +175,9 @@ public class Panel_begin extends JPanel {
         jSpinner_mld.setSize(w_field, h);
         jSpinner_mld.setLocation(win_w + w, win_h + 60);
 
-        ChangeListener listener2 = new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                JSpinner js = (JSpinner) e.getSource();
-                baby = (int) js.getValue();
-            }
+        ChangeListener listener2 = (ChangeEvent e) -> {
+            JSpinner js = (JSpinner) e.getSource();
+            baby = (int) js.getValue();
         };
         jSpinner_mld.addChangeListener(listener2);
 
@@ -237,11 +195,8 @@ public class Panel_begin extends JPanel {
         otk_gorod = (String) jComboBox_otk_gorod.getSelectedItem();
 
         //выбираем после нажатия
-        jComboBox_otk_gorod.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                otk_gorod = (String) jComboBox_otk_gorod.getSelectedItem();
-
-            }
+        jComboBox_otk_gorod.addActionListener((ActionEvent event) -> {
+            otk_gorod = (String) jComboBox_otk_gorod.getSelectedItem();
         });
 
         //Куда
@@ -257,12 +212,8 @@ public class Panel_begin extends JPanel {
         kuda_gorod = (String) jComboBox_kuda_gorod.getSelectedItem();
 
         //выбираем после нажатия
-        jComboBox_kuda_gorod.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent event) {
-                kuda_gorod = (String) jComboBox_kuda_gorod.getSelectedItem();
-
-            }
+        jComboBox_kuda_gorod.addActionListener((ActionEvent event) -> {
+            kuda_gorod = (String) jComboBox_kuda_gorod.getSelectedItem();
         });
 
         //Класс обслуживания
@@ -321,115 +272,101 @@ public class Panel_begin extends JPanel {
     }
 
     public void ComBox_otk(String[] strana, String url, String user, String password, ArrayList<String> gorod, ArrayList<String> IATA, ArrayList<String> ICAO) {
-        for (int i = 0; i < strana.length; i++) {
-            jComboBox_otk_strana.addItem(strana[i]);
+        for (String strana1 : strana) {
+            jComboBox_otk_strana.addItem(strana1);
         }
 
-        jComboBox_otk_strana.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent event) {
-
-                String flag = (String) jComboBox_otk_strana.getSelectedItem();
-                jComboBox_otk_gorod.removeAllItems();
-                try (Connection c = DriverManager.getConnection(url, user, password)) {
-                    int id = 0;
-                    c.setAutoCommit(false);
-                    c.setReadOnly(false);
-                    try (PreparedStatement ps = c.prepareStatement("SELECT  * FROM `strana` WHERE Nazvanie=?")) {
-                        ps.setString(1, flag);
-                        try (ResultSet rs = ps.executeQuery()) {
-                            while (rs.next()) {
-                                id = rs.getInt("Strana_id");
-                            }
+        jComboBox_otk_strana.addActionListener((ActionEvent event) -> {
+            String flag = (String) jComboBox_otk_strana.getSelectedItem();
+            jComboBox_otk_gorod.removeAllItems();
+            try (Connection c = DriverManager.getConnection(url, user, password)) {
+                int id = 0;
+                c.setAutoCommit(false);
+                c.setReadOnly(false);
+                try (PreparedStatement ps = c.prepareStatement("SELECT  * FROM `strana` WHERE Nazvanie=?")) {
+                    ps.setString(1, flag);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        while (rs.next()) {
+                            id = rs.getInt("Strana_id");
                         }
-                        ps.close();
                     }
-                    try (PreparedStatement ps = c.prepareStatement("SELECT  * FROM `ajeroport` WHERE Strana_id=?")) {
-                        ps.setInt(1, id);
-                        try (ResultSet rs = ps.executeQuery()) {
-                            while (rs.next()) {
-                                gorod.add(rs.getString("Naznanie"));
-                                IATA.add(rs.getString("IATA"));
-                                ICAO.add(rs.getString("ICAO"));
-                            }
+                    ps.close();
+                }
+                try (PreparedStatement ps = c.prepareStatement("SELECT  * FROM `ajeroport` WHERE Strana_id=?")) {
+                    ps.setInt(1, id);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        while (rs.next()) {
+                            gorod.add(rs.getString("Naznanie"));
+                            IATA.add(rs.getString("IATA"));
+                            ICAO.add(rs.getString("ICAO"));
                         }
-                        ps.close();
                     }
-                    c.commit();
-                    c.commit();
-                    c.close();
-                } catch (SQLException se) {
-                    se.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    ps.close();
                 }
-
-                for (int i = 0; i < gorod.size(); i++) {
-
-                    //jComboBox_otk_gorod.addItem(gorod.get(i) + " (" + IATA.get(i) + ", " + ICAO.get(i) + ")");
-                    jComboBox_otk_gorod.addItem(gorod.get(i));
-                }
-                gorod.removeAll(gorod);
-                //IATA.removeAll(IATA);
-                //ICAO.removeAll(ICAO);
+                c.commit();
+                c.commit();
+                c.close();
+            } catch (SQLException se) {
+            } catch (Exception e) {
             }
-        }
-        );
+            
+            for (int i = 0; i < gorod.size(); i++) {
+                
+                //jComboBox_otk_gorod.addItem(gorod.get(i) + " (" + IATA.get(i) + ", " + ICAO.get(i) + ")");
+                jComboBox_otk_gorod.addItem(gorod.get(i));
+            }
+            gorod.removeAll(gorod);
+            //IATA.removeAll(IATA);
+            //ICAO.removeAll(ICAO);
+        });
     }
 
     public void Combox_kuda(String[] strana, String url, String user, String password, ArrayList<String> gorod_kuda, ArrayList<String> IATA_kuda, ArrayList<String> ICAO_kuda, ArrayList<String> gorod, ArrayList<String> IATA, ArrayList<String> ICAO) {
-        for (int i = 0; i < strana.length; i++) {
-            jComboBox_kuda_strana.addItem(strana[i]);
+        for (String strana1 : strana) {
+            jComboBox_kuda_strana.addItem(strana1);
         }
-        jComboBox_kuda_strana.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent event) {
-                jComboBox_kuda_gorod.removeAllItems();
-                String flag = (String) jComboBox_kuda_strana.getSelectedItem();
-                try (Connection c = DriverManager.getConnection(url, user, password)) {
-                    int id = 0;
-                    c.setAutoCommit(false);
-                    c.setReadOnly(false);
-                    try (PreparedStatement ps = c.prepareStatement("SELECT  * FROM `strana` WHERE Nazvanie=?")) {
-                        ps.setString(1, flag);
-                        try (ResultSet rs = ps.executeQuery()) {
-                            while (rs.next()) {
-                                id = rs.getInt("Strana_id");
-                            }
+        jComboBox_kuda_strana.addActionListener((ActionEvent event) -> {
+            jComboBox_kuda_gorod.removeAllItems();
+            String flag = (String) jComboBox_kuda_strana.getSelectedItem();
+            try (Connection c = DriverManager.getConnection(url, user, password)) {
+                int id = 0;
+                c.setAutoCommit(false);
+                c.setReadOnly(false);
+                try (PreparedStatement ps = c.prepareStatement("SELECT  * FROM `strana` WHERE Nazvanie=?")) {
+                    ps.setString(1, flag);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        while (rs.next()) {
+                            id = rs.getInt("Strana_id");
                         }
-                        ps.close();
                     }
-                    System.out.println("Strana_id: " + id);
-                    try (PreparedStatement ps = c.prepareStatement("SELECT  * FROM `ajeroport` WHERE Strana_id=?")) {
-                        ps.setInt(1, id);
-                        try (ResultSet rs = ps.executeQuery()) {
-                            while (rs.next()) {
-                                gorod_kuda.add(rs.getString("Naznanie"));
-                                IATA_kuda.add(rs.getString("IATA"));
-                                ICAO_kuda.add(rs.getString("ICAO"));
-                            }
+                    ps.close();
+                }
+                System.out.println("Strana_id: " + id);
+                try (PreparedStatement ps = c.prepareStatement("SELECT  * FROM `ajeroport` WHERE Strana_id=?")) {
+                    ps.setInt(1, id);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        while (rs.next()) {
+                            gorod_kuda.add(rs.getString("Naznanie"));
+                            IATA_kuda.add(rs.getString("IATA"));
+                            ICAO_kuda.add(rs.getString("ICAO"));
                         }
-                        ps.close();
                     }
-                    c.commit();
-                    c.commit();
-                    c.close();
-                } catch (SQLException se) {
-                    se.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    ps.close();
                 }
-                for (int i = 0; i < gorod_kuda.size(); i++) {
-                    //jComboBox_kuda_gorod.addItem(gorod_kuda.get(i) + " (" + IATA_kuda.get(i) + ", " + ICAO_kuda.get(i) + ")");
-                    jComboBox_kuda_gorod.addItem(gorod_kuda.get(i));
-                }
-                gorod_kuda.removeAll(gorod);
-                //IATA_kuda.removeAll(IATA);
-                //ICAO_kuda.removeAll(ICAO);
-
+                c.commit();
+                c.commit();
+                c.close();
+            } catch (SQLException se) {
+            } catch (Exception e) {
             }
-        }
-        );
+            for (int i = 0; i < gorod_kuda.size(); i++) {
+                //jComboBox_kuda_gorod.addItem(gorod_kuda.get(i) + " (" + IATA_kuda.get(i) + ", " + ICAO_kuda.get(i) + ")");
+                jComboBox_kuda_gorod.addItem(gorod_kuda.get(i));
+            }
+            gorod_kuda.removeAll(gorod);
+            //IATA_kuda.removeAll(IATA);
+            //ICAO_kuda.removeAll(ICAO);
+        });
     }
 
     public void insert_gorods(String url, String user, String password) {
@@ -448,9 +385,7 @@ public class Panel_begin extends JPanel {
             c.commit();
             c.close();
         } catch (SQLException se) {
-            se.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -469,9 +404,7 @@ public class Panel_begin extends JPanel {
             c.commit();
             c.close();
         } catch (SQLException se) {
-            se.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

@@ -1,7 +1,7 @@
-package Zakaz_panels;
+package zakaz.panels;
 
-import Connect.Conn;
-import Interface.Info_zakaz;
+import conn.Conn;
+import frame.Info_zakaz;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Panel_oplata extends JPanel {
+public class PanelOplata extends JPanel {
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// определяем размер экрана
     int flag = 0;
@@ -29,7 +29,7 @@ public class Panel_oplata extends JPanel {
     private JLabel mili_Label;
     private JTextField kreditnaya_karta_Field;
     private JTextField mili_Field;
-    private Zakaz_p p = new Zakaz_p();
+    private ZakazP p = new ZakazP();
     private int element_id = p.getElement_id();
     private int cena = p.getCena();
     private int klient_id = p.getId();
@@ -39,7 +39,7 @@ public class Panel_oplata extends JPanel {
     private JButton b1 = new JButton("Назад");
     private JButton b2 = new JButton("Оплатить");
 
-    public Panel_oplata() {
+    public PanelOplata() {
 
         this.setLayout(null);
         this.setBounds(0, 0, screenSize.width, screenSize.height);

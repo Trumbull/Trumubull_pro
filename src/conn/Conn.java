@@ -1,4 +1,4 @@
-package Connect;
+package conn;
 
 public class Conn {
 

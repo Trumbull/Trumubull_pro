@@ -1,6 +1,6 @@
-package Zakaz_panels;
+package zakaz.panels;
 
-import Connect.Conn;
+import conn.Conn;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -16,11 +16,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Panel_zakaz_end extends JPanel {
+public class PanelZakazEnd extends JPanel {
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// определяем размер экрана
     private int flag = 0;
-    private Zakaz_p p = new Zakaz_p();
+    private ZakazP p = new ZakazP();
     private int adult = p.getAdult();
     private int child = p.getChild();
     private int baby = p.getBaby();
@@ -46,7 +46,7 @@ public class Panel_zakaz_end extends JPanel {
     private JTextField person_child_4_field;
     private JTextField person_child_5_field;
 
-    public Panel_zakaz_end() {
+    public PanelZakazEnd() {
         this.setBounds(0, 0, screenSize.width, screenSize.height);
         this.setLayout(null);
         JLabel nomer_zakaza_label;
@@ -295,7 +295,7 @@ public class Panel_zakaz_end extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_vibor_klienta());
+            this.add(new PanelViborKlienta());
 
         });
         b2.addActionListener((java.awt.event.ActionEvent evt) -> {
@@ -304,7 +304,7 @@ public class Panel_zakaz_end extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_vibor_klienta());
+            this.add(new PanelViborKlienta());
 
         });
         b3.addActionListener((java.awt.event.ActionEvent evt) -> {
@@ -313,7 +313,7 @@ public class Panel_zakaz_end extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_vibor_klienta());
+            this.add(new PanelViborKlienta());
 
         });
         b4.addActionListener((java.awt.event.ActionEvent evt) -> {
@@ -322,7 +322,7 @@ public class Panel_zakaz_end extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_vibor_klienta());
+            this.add(new PanelViborKlienta());
 
         });
         b5.addActionListener((java.awt.event.ActionEvent evt) -> {
@@ -331,7 +331,7 @@ public class Panel_zakaz_end extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_vibor_klienta());
+            this.add(new PanelViborKlienta());
 
         });
 
@@ -341,7 +341,7 @@ public class Panel_zakaz_end extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_vibor_klienta());
+            this.add(new PanelViborKlienta());
 
         });
         b7.addActionListener((java.awt.event.ActionEvent evt) -> {
@@ -350,7 +350,7 @@ public class Panel_zakaz_end extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_vibor_klienta());
+            this.add(new PanelViborKlienta());
 
         });
         b8.addActionListener((java.awt.event.ActionEvent evt) -> {
@@ -359,7 +359,7 @@ public class Panel_zakaz_end extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_vibor_klienta());
+            this.add(new PanelViborKlienta());
 
         });
         b9.addActionListener((java.awt.event.ActionEvent evt) -> {
@@ -368,7 +368,7 @@ public class Panel_zakaz_end extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_vibor_klienta());
+            this.add(new PanelViborKlienta());
 
         });
         b10.addActionListener((java.awt.event.ActionEvent evt) -> {
@@ -377,7 +377,7 @@ public class Panel_zakaz_end extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_oplata());
+            this.add(new PanelOplata());
 
         });
         drop.addActionListener((java.awt.event.ActionEvent evt) -> {
@@ -390,7 +390,7 @@ public class Panel_zakaz_end extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_zakaz_element());
+            this.add(new PanelZakazElement());
 
         });
 
@@ -400,7 +400,7 @@ public class Panel_zakaz_end extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_oplata());
+            this.add(new PanelOplata());
         });
 
         nomer_zakaza_label.setSize(w, h);

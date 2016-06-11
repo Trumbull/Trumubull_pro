@@ -1,7 +1,7 @@
-package Zakaz_panels;
+package zakaz.panels;
 
-import Connect.Conn;
-import Interface.Info_zakaz;
+import conn.Conn;
+import frame.Info_zakaz;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -35,7 +35,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-public class Panel_vibor_klienta extends JPanel {
+public class PanelViborKlienta extends JPanel {
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// определяем размер экрана
 
@@ -48,7 +48,7 @@ public class Panel_vibor_klienta extends JPanel {
     DefaultTableModel model = (DefaultTableModel) table_klient.getModel();
     private TableRowSorter<DefaultTableModel> sorter;
 
-    public Panel_vibor_klienta() {
+    public PanelViborKlienta() {
         sorter = new TableRowSorter<>(model);
         JLabel l1 = new JLabel("Найти:");
         JButton b1 = new JButton("Далее");
@@ -246,7 +246,7 @@ public class Panel_vibor_klienta extends JPanel {
             this.revalidate();
             this.repaint();
             this.updateUI();
-            this.add(new Panel_zakaz_end());
+            this.add(new PanelZakazEnd());
 
         });
         b2.addActionListener((ActionEvent e) -> {
@@ -255,11 +255,11 @@ public class Panel_vibor_klienta extends JPanel {
             this.repaint();
             this.updateUI();
             try {
-                this.add(new Panel_klient_new());
+                this.add(new PanelKlientNew());
             } catch (SQLException ex) {
-                Logger.getLogger(Panel_vibor_klienta.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PanelViborKlienta.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ParseException ex) {
-                Logger.getLogger(Panel_vibor_klienta.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PanelViborKlienta.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
