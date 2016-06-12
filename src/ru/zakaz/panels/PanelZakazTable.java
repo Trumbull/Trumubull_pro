@@ -1,6 +1,6 @@
-package zakaz.panels;
+package ru.zakaz.panels;
 
-import conn.Conn;
+import ru.conn.Conn;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;

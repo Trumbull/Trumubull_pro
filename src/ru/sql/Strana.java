@@ -1,6 +1,6 @@
-package sql;
+package ru.sql;
 
-import conn.Conn;
+import ru.conn.Conn;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

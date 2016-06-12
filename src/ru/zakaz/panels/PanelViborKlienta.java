@@ -1,7 +1,7 @@
-package zakaz.panels;
+package ru.zakaz.panels;
 
-import conn.Conn;
-import frame.Info_zakaz;
+import ru.conn.Conn;
+import ru.frame.InfoZakaz;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;

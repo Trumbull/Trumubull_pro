@@ -1,6 +1,6 @@
-package zakaz.panels;
+package ru.zakaz.panels;
 
-import conn.Conn;
+import ru.conn.Conn;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -21,7 +21,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -280,33 +279,30 @@ public class PanelViborRejs extends JPanel {
 
         listSelectionModel = table.getSelectionModel();
         listSelectionModel
-                .addListSelectionListener(new ListSelectionListener() {
-                    public void valueChanged(ListSelectionEvent e) {
-                        ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-
-                        //int firstIndex = e.getFirstIndex();
-                        // int lastIndex = e.getLastIndex();
-                        // boolean isAdjusting = e.getValueIsAdjusting();
-                        /*
-                        System.out.println("Первая ячейка " + firstIndex + " - " + lastIndex
-                                + "; " + isAdjusting + "; selected indexes:");
-                         */
-                        if (lsm.isSelectionEmpty()) {
-                            System.out.println(" <none>");
-                        } else {
-                            // Find out which indexes are selected.
-                            int minIndex = lsm.getMinSelectionIndex();
-                            int maxIndex = lsm.getMaxSelectionIndex();
-                            for (int i = minIndex; i <= maxIndex; i++) {
-                                if (lsm.isSelectedIndex(i)) {
-                                    System.out.println("" + i); //Строчка 
-                                    id_row = i;
-                                }
+                .addListSelectionListener((ListSelectionEvent e) -> {
+                    ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+                    
+                    //int firstIndex = e.getFirstIndex();
+                    // int lastIndex = e.getLastIndex();
+                    // boolean isAdjusting = e.getValueIsAdjusting();
+                    /*
+                    System.out.println("Первая ячейка " + firstIndex + " - " + lastIndex
+                    + "; " + isAdjusting + "; selected indexes:");
+                    */
+                    if (lsm.isSelectionEmpty()) {
+                        System.out.println(" <none>");
+                    } else {
+                        // Find out which indexes are selected.
+                        int minIndex = lsm.getMinSelectionIndex();
+                        int maxIndex = lsm.getMaxSelectionIndex();
+                        for (int i = minIndex; i <= maxIndex; i++) {
+                            if (lsm.isSelectedIndex(i)) {
+                                System.out.println("" + i); //Строчка
+                                id_row = i;
                             }
                         }
                     }
-                }
-                );
+        });
         table.setSelectionModel(listSelectionModel);
 
         b1.addActionListener((ActionEvent e) -> {
@@ -332,9 +328,7 @@ public class PanelViborRejs extends JPanel {
             this.updateUI();
             try {
                 this.add(new PanelBegin());
-            } catch (SQLException ex) {
-                Logger.getLogger(PanelViborRejs.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
+            } catch (SQLException | ParseException ex) {
                 Logger.getLogger(PanelViborRejs.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
@@ -355,9 +349,7 @@ public class PanelViborRejs extends JPanel {
             c.commit();
             c.close();
         } catch (SQLException se) {
-            se.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

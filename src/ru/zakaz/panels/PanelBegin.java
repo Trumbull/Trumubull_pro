@@ -1,6 +1,6 @@
-package zakaz.panels;
+package ru.zakaz.panels;
 
-import conn.Conn;
+import ru.conn.Conn;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,8 +20,8 @@ import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.MaskFormatter;
-import size.windows.SizeWindows;
-import sql.Strana;
+import ru.size.windows.SizeWindows;
+import ru.sql.Strana;
 
 //Добавить Заказ
 public final class PanelBegin extends JPanel {

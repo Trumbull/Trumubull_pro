@@ -1,4 +1,4 @@
-package zakaz.panels;
+package ru.zakaz.panels;
 
 public class ZakazP {
 

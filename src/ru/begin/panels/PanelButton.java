@@ -1,15 +1,15 @@
-package begin.panels;
+package ru.begin.panels;
 
-import frame.Vse_klienti;
-import frame.Zakaz;
-import frame.Info_zakaz;
+import ru.frame.VseKlienti;
+import ru.frame.Zakaz;
+import ru.frame.InfoZakaz;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import size.windows.SizeWindows;
+import ru.size.windows.SizeWindows;
 
 //Начальная панель
 public class PanelButton extends JPanel {
@@ -69,10 +69,10 @@ public class PanelButton extends JPanel {
     }
 
     private void b2ActionPerformed() {
-        new Info_zakaz().setVisible(true);
+        new InfoZakaz().setVisible(true);
     }
 
     private void b3ActionPerformed() throws SQLException {
-        new Vse_klienti().setVisible(true);
+        new VseKlienti().setVisible(true);
     }
 }
