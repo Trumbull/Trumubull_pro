@@ -29,15 +29,6 @@ public class VseKlientiSql {
         try (Connection c = DriverManager.getConnection(url, user, password)) {
             c.setAutoCommit(false);
             c.setReadOnly(false);
-            int id = 0;
-            try (PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM `klient`")) {
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        id = rs.getInt("COUNT(*)");
-                    }
-                }
-                ps.close();
-            }
             try (PreparedStatement ps = c.prepareStatement("SELECT * FROM `strana`")) {
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
