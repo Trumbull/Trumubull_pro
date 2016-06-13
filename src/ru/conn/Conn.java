@@ -21,16 +21,19 @@ public class Conn {
             while ((line[id] = reader.readLine()) != null) {
                 //  System.out.println(line[id]);
                 id++;
+                if (id >= 3) {
+                    break;
+                }
             }
         } catch (IOException e) {
-            System.out.println("Файл с настрйоками не найден!");
+            System.out.println("Файл с настройками не найден!");
         }
         /*
         url = "jdbc:mysql://localhost:3306/mydb?useUnicode=true&characterEncoding=utf8";
         user = "root";
         password = "";
          */
-        url = line[0];
+        url = "jdbc:mysql://localhost:3306/"+line[0]+"?useUnicode=true&characterEncoding=utf8";
         user = line[1];
         password = line[2];
     }
